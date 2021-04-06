@@ -1,9 +1,12 @@
 import './App.scss';
 
+//custom components
+import { Header } from "./components/header/header.component";
+
 function App() {
   return (
     <div className="app">
-      <header className="app-header">hi there</header>
+      <Header title="Our new app" username="Sir Elliot Pilgrim" />
     </div>
   );
 }
