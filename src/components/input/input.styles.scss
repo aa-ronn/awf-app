@@ -1,0 +1,21 @@
+@use "../../scss/consts" as *;
+
+.input-component-wrapper {
+  p {
+    @include sub-title-font;
+    margin-bottom: 5px;
+  }
+
+  input {
+    @include regular-font;
+    @include border-main;
+    padding: 5px 10px;
+  }
+
+  label {
+    input {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

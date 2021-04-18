@@ -1,4 +1,20 @@
-.app{
+@use "./scss/consts" as *;
+
+.app {
   width: 100%;
   height: 100%;
+  background-color: $backgroud-color;
+
+  //global styles
+  h1 {
+    @include title-font;
+  }
+
+  p {
+    @include regular-font;
+  }
+
+  button {
+    @include button-main;
+  }
 }

@@ -1,0 +1,27 @@
+@use "../../scss/consts" as *;
+
+.form-component-wrapper {
+  width: max-content;
+  padding: 1rem;
+
+  p {
+    margin-bottom: 5px;
+  }
+
+  .children {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    div:nth-child(1) > label > p {
+      margin-top: 0;
+    }
+  }
+
+  .submit-button {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+}

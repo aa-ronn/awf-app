@@ -1,0 +1,20 @@
+@use "./colors" as *;
+@use "./fonts" as *;
+
+@mixin border-main {
+  border-radius: 10px;
+  border: 1px solid $border-color;
+}
+
+@mixin button-main {
+  @include sub-title-font;
+  color: $font-color-tertiary;
+  background-color: $secondary-color;
+  @include border-main();
+  padding: 5px 10px;
+
+  &:hover {
+    background-color: $primary-color;
+    transform: scale(1.05);
+  }
+}

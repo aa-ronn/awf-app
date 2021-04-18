@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { StoreContext } from "../context/store/store.context";
+import { AuthContext } from "../../context/auth/auth.context";
 import "./home.styles.scss";
 
 export const HomePage = () => {
-  const { state, dispatch } = useContext(StoreContext);
+  const { user } = useContext(AuthContext);
   return (
     <div className="home-page">
       <div className="content"></div>
