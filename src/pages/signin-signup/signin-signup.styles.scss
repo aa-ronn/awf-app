@@ -3,4 +3,16 @@
 .signin-signup-page {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .need-an-account {
+    margin-top: 0;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+      text-decoration: underline;
+      color: $primary-color;
+    }
+  }
 }

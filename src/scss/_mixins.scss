@@ -9,12 +9,13 @@
 @mixin button-main {
   @include sub-title-font;
   color: $font-color-tertiary;
-  background-color: $secondary-color;
+  background-color: $primary-color;
   @include border-main();
   padding: 5px 10px;
+  cursor: pointer;
 
   &:hover {
-    background-color: $primary-color;
+    background-color: $secondary-color;
     transform: scale(1.05);
   }
 }

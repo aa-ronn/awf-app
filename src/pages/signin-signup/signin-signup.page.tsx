@@ -1,63 +1,19 @@
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import { Form } from "../../components/form/form.component";
-import { Input } from "../../components/input/input.component";
-import { AuthContext } from "../../context/auth/auth.context";
+import { useState } from "react";
+import { SignIn } from "../../components/signin/signin.component";
+import { SignUp } from "../../components/signup/signup.component";
 import "./signin-signup.styles.scss";
 
 export const SignInSignUpPage = () => {
-  const { signUpWithEmailAndPassword, signInWithEmailAndPassword } = useContext(
-    AuthContext
-  );
-
-  const [signInState, setSignInState] = useState<{
-    email: string;
-    password: string;
-  }>({ email: "", password: "" });
-
-  const handleChange = (
-    event:
-      | ChangeEvent<HTMLInputElement>
-      | ChangeEvent<HTMLSelectElement>
-      | ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { value, name } = event.target;
-    console.log(value + ":" + name);
-    setSignInState({ ...signInState, [name]: value });
-  };
-
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    console.log("form submitted");
-  };
-
+  const [isSigningIn, setIsSigningIn] = useState(true);
   return (
     <div className="signin-signup-page">
-      <div className="login-wrapper">
-        <Form
-          title="Please Log In"
-          emoji="🤓"
-          buttonLabel="Log In"
-          handleSubmit={handleFormSubmit}
-        >
-          <Input
-            name="email"
-            label="Email"
-            type="text"
-            placeholder="Enter email"
-            emoji="📧"
-            handleChange={handleChange}
-          />
-          <Input
-            name="password"
-            label="Password"
-            type="password"
-            placeholder="Enter password"
-            emoji="🔑"
-            handleChange={handleChange}
-          />
-        </Form>
-      </div>
+      {isSigningIn ? <SignIn /> : <SignUp />}
+      <p
+        className="need-an-account"
+        onClick={() => setIsSigningIn(!isSigningIn)}
+      >
+        {isSigningIn ? "Don't have an account?" : "Already have an account?"}
+      </p>
     </div>
   );
 };

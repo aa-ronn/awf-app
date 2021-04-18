@@ -24,7 +24,7 @@ export const Form: FC<IForm> = ({
       <form onSubmit={handleSubmit}>
         <div className="children">{children}</div>
         <div className="submit-button">
-          <button type="submit">🔓 {buttonLabel}</button>
+          <button type="submit">{buttonLabel}</button>
         </div>
       </form>
     </div>
