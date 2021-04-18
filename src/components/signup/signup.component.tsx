@@ -8,9 +8,12 @@ export const SignUp = () => {
   const { signUpWithEmailAndPassword } = useContext(AuthContext);
 
   const [signUpState, setSignUpState] = useState<{
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
-  }>({ email: "", password: "" });
+  }>({ firstName: "", lastName: "", email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     event:
@@ -19,14 +22,21 @@ export const SignUp = () => {
       | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { value, name } = event.target;
-    console.log(value + ":" + name);
     setSignUpState({ ...signUpState, [name]: value });
   };
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("form submitted");
+    const { firstName, lastName, email, password } = signUpState;
+
+    setIsLoading(true);
+    await signUpWithEmailAndPassword(firstName, lastName, email, password).then(
+      (res) => {
+        console.log(res);
+        setIsLoading(false);
+      }
+    );
   };
 
   return (
@@ -36,6 +46,7 @@ export const SignUp = () => {
         emoji="🐒"
         buttonLabel="Sign Up"
         handleSubmit={handleFormSubmit}
+        isLoading={isLoading}
       >
         <Input
           name="firstName"
@@ -43,6 +54,7 @@ export const SignUp = () => {
           type="text"
           placeholder="Enter first name"
           emoji="🙉"
+          required
           handleChange={handleChange}
         />
         <Input
@@ -51,6 +63,7 @@ export const SignUp = () => {
           type="text"
           placeholder="Enter last name"
           emoji="🙊"
+          required
           handleChange={handleChange}
         />
         <Input
@@ -59,6 +72,7 @@ export const SignUp = () => {
           type="text"
           placeholder="Enter email"
           emoji="📧"
+          required
           handleChange={handleChange}
         />
         <Input
@@ -67,6 +81,7 @@ export const SignUp = () => {
           type="password"
           placeholder="Enter password"
           emoji="🙈"
+          required
           handleChange={handleChange}
         />
       </Form>

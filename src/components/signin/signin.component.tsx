@@ -19,7 +19,6 @@ export const SignIn = () => {
       | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { value, name } = event.target;
-    console.log(value + ":" + name);
     setSignInState({ ...signInState, [name]: value });
   };
 
@@ -43,6 +42,7 @@ export const SignIn = () => {
           type="text"
           placeholder="Enter email"
           emoji="📧"
+          required
           handleChange={handleChange}
         />
         <Input
@@ -51,6 +51,7 @@ export const SignIn = () => {
           type="password"
           placeholder="Enter password"
           emoji="🙈"
+          required
           handleChange={handleChange}
         />
       </Form>

@@ -1,10 +1,12 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useState } from "react";
+import { Spinner } from "../spinner/spinner.component";
 import "./form.styles.scss";
 
 interface IForm {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
   title: string;
   buttonLabel: string;
+  isLoading?: boolean;
   emoji?: string;
   [x: string]: any;
 }
@@ -12,6 +14,7 @@ interface IForm {
 export const Form: FC<IForm> = ({
   children,
   handleSubmit,
+  isLoading = false,
   title,
   buttonLabel,
   emoji,
@@ -21,10 +24,13 @@ export const Form: FC<IForm> = ({
       <h1>
         {title} {emoji}
       </h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="children">{children}</div>
         <div className="submit-button">
-          <button type="submit">{buttonLabel}</button>
+          <button type="submit">
+            {!isLoading ? buttonLabel : "Loading..."}{" "}
+            <Spinner isLoading={isLoading} />
+          </button>
         </div>
       </form>
     </div>

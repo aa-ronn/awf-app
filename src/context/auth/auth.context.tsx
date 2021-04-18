@@ -1,3 +1,4 @@
+import axios from "axios";
 import { FC, createContext, useState } from "react";
 import { AuthContextType, User } from "../../types/auth.types";
 
@@ -26,7 +27,27 @@ const AuthProvider: FC = ({ children }) => {
     password: string
   ): Promise<string> =>
     new Promise((resolve, reject) => {
-      resolve("signed up");
+      axios({
+        method: "post",
+        url: "http://localhost:5000/auth/register",
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        },
+      })
+        .then((res: any) => {
+          setToken(res.token);
+          setUser(res.user);
+        })
+        .then(() => {
+          resolve("User created");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
     });
 
   /**
