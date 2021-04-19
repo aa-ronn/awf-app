@@ -1,5 +1,6 @@
 @use "./colors" as *;
 @use "./fonts" as *;
+@use "./sizes" as *;
 
 @mixin border-main {
   border-radius: 10px;
@@ -8,15 +9,18 @@
 
 @mixin button-main {
   display: flex;
+  justify-content: center;
+  align-items: center;
   @include sub-title-font;
-  color: $font-color-tertiary;
-  background-color: $primary-color;
+  color: $font-color-primary;
+  background-color: $backgroud-color;
   @include border-main();
   padding: 5px 10px;
+  max-height: $size-lg;
   cursor: pointer;
 
   &:hover {
-    background-color: $secondary-color;
-    transform: scale(1.05);
+    background-color: $primary-color;
+    color: $font-color-tertiary;
   }
 }

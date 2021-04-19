@@ -38,8 +38,8 @@ const AuthProvider: FC = ({ children }) => {
         },
       })
         .then((res: any) => {
-          setToken(res.token);
-          setUser(res.user);
+          setToken(res.data.token);
+          setUser(res.data.user);
         })
         .then(() => {
           resolve("User created");
@@ -61,7 +61,25 @@ const AuthProvider: FC = ({ children }) => {
     password: string
   ): Promise<string> =>
     new Promise((resolve, reject) => {
-      resolve("signed in");
+      axios({
+        method: "post",
+        url: "http://localhost:5000/auth/login",
+        data: {
+          email: email,
+          password: password,
+        },
+      })
+        .then((res: any) => {
+          setToken(res.data.token);
+          setUser(res.data.user);
+        })
+        .then(() => {
+          resolve("User Loged In");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
     });
 
   /**
@@ -70,7 +88,9 @@ const AuthProvider: FC = ({ children }) => {
    * @returns none
    */
   const signOut = () => {
-    console.log("signed out");
+    setToken(null);
+    setUser(null);
+    console.log("Signed Out");
   };
 
   return (

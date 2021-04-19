@@ -24,7 +24,7 @@ function App() {
   } else {
     return (
       <div className="app">
-        <Header title="Do a Project!" username="Sally Rogers" />
+        <Header title="Lets Do A Project!" />
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={HomePage} />

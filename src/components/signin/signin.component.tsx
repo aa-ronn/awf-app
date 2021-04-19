@@ -11,6 +11,7 @@ export const SignIn = () => {
     email: string;
     password: string;
   }>({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (
     event:
@@ -22,10 +23,19 @@ export const SignIn = () => {
     setSignInState({ ...signInState, [name]: value });
   };
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("form submitted");
+    const { email, password } = signInState;
+
+    setIsLoading(true);
+    await signInWithEmailAndPassword(email, password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -35,6 +45,7 @@ export const SignIn = () => {
         emoji="🦧"
         buttonLabel="Log In"
         handleSubmit={handleFormSubmit}
+        isLoading={isLoading}
       >
         <Input
           name="email"

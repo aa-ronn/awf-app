@@ -31,16 +31,17 @@ export const SignUp = () => {
     const { firstName, lastName, email, password } = signUpState;
 
     setIsLoading(true);
-    await signUpWithEmailAndPassword(firstName, lastName, email, password).then(
-      (res) => {
+    await signUpWithEmailAndPassword(firstName, lastName, email, password)
+      .then((res) => {
         console.log(res);
+      })
+      .catch(() => {
         setIsLoading(false);
-      }
-    );
+      });
   };
 
   return (
-    <div className="signin-component">
+    <div className="signup-component">
       <Form
         title="Please Sign Up"
         emoji="🐒"

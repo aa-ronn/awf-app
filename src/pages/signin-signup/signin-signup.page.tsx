@@ -5,6 +5,7 @@ import "./signin-signup.styles.scss";
 
 export const SignInSignUpPage = () => {
   const [isSigningIn, setIsSigningIn] = useState(true);
+
   return (
     <div className="signin-signup-page">
       {isSigningIn ? <SignIn /> : <SignUp />}

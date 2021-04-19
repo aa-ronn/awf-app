@@ -1,7 +1,37 @@
-.header-component{
-	width: 98%;
-	height: 50px;
-	display: flex;
-	justify-content: space-between;
-	margin: 1rem;
+@use "../../scss//consts" as *;
+
+.header-component {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: $size-md;
+
+  .left-content {
+    h1 {
+      margin: 0;
+    }
+  }
+
+  .right-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .user-details {
+      @include sub-title-font;
+    }
+
+    button {
+      margin-left: $size-md;
+
+      div {
+        &:hover {
+          &:after {
+            content: "👋";
+          }
+        }
+      }
+    }
+  }
 }
