@@ -8,14 +8,14 @@ import { AuthContext } from "./context/auth/auth.context";
 import { Header } from "./components/header/header.component";
 
 //pages
-import { HomePage } from "./pages/home/home.page";
+import { ProjectsPage } from "./pages/projects/projects.page";
 import { SignInSignUpPage } from "./pages/signin-signup/signin-signup.page";
 import { useContext } from "react";
 
 function App() {
   const { token } = useContext(AuthContext);
 
-  if (!token) {
+  if (token) {
     return (
       <div className="app">
         <SignInSignUpPage />
@@ -24,10 +24,10 @@ function App() {
   } else {
     return (
       <div className="app">
-        <Header title="Lets Do A Project!" />
+        <Header title="Monkey Business!" />
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" component={ProjectsPage} />
           </Switch>
         </BrowserRouter>
       </div>
