@@ -1,19 +1,19 @@
 import { FC, MouseEventHandler } from "react";
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+} from "@fortawesome/react-fontawesome";
+
 import "./fab.styles.scss";
 
 interface IFab {
   onClick: MouseEventHandler<HTMLDivElement>;
-  icon: string | any;
+  icon: FontAwesomeIconProps | any;
   text?: string;
   shape?: "circle" | "pill";
 }
 
-export const Fab: FC<IFab> = ({
-  onClick,
-  icon = "+",
-  text,
-  shape = "circle",
-}) => {
+export const Fab: FC<IFab> = ({ onClick, icon, text, shape = "circle" }) => {
   return (
     <div
       className={text || shape === "pill" ? `fab-button pill` : `fab-button`}
@@ -21,10 +21,11 @@ export const Fab: FC<IFab> = ({
     >
       {text ? (
         <>
-          <span>{icon}</span> {text}
+          <FontAwesomeIcon icon={icon} />
+          {text}
         </>
       ) : (
-        <span>{icon}</span>
+        <FontAwesomeIcon icon={icon} />
       )}
     </div>
   );

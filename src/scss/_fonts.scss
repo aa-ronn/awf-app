@@ -8,22 +8,29 @@
 }
 
 @mixin sub-title-font {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: 1px;
   color: $font-color-primary;
 }
 
 @mixin regular-font {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 400;
   letter-spacing: 1px;
   color: $font-color-primary;
 }
 
-@mixin regular-font-secondary {
-  font-size: 1rem;
+@mixin small-regular-font {
+  font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 1px;
-  color: $font-color-tertiary;
+  color: $font-color-primary;
+}
+
+@mixin tiny-regular-font {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: $font-color-primary;
 }

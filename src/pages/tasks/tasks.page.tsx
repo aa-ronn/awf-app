@@ -1,14 +1,14 @@
 import { Fab } from "../../components/fab/fab.component";
-import "./projects.styles.scss";
+import "./tasks.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-export const ProjectsPage = () => {
+export const TasksPage = () => {
   return (
-    <div className="projects-page">
+    <div className="tasks-page">
       <div className="content">
         <Fab
           icon={faPlus}
-          text="Project"
+          text="Task"
           onClick={() => console.log("fab clicked")}
         />
       </div>

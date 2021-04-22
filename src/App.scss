@@ -5,9 +5,22 @@
   height: 100%;
   background-color: $backgroud-color;
 
+  .sidebar-position {
+    display: flex;
+  }
+
+  .pages-position {
+    display: flex;
+    flex-direction: column;
+  }
+
   //global styles
   h1 {
     @include title-font;
+  }
+
+  h2 {
+    @include sub-title-font;
   }
 
   p {

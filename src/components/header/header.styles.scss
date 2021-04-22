@@ -6,6 +6,7 @@
   justify-content: space-between;
   align-items: center;
   margin: $size-md;
+  width: calc(100vw - 264px);
 
   .left-content {
     h1 {
@@ -29,10 +30,16 @@
         &:hover {
           &:after {
             content: "👋";
-            font-size: 14px;
+            font-size: 16px;
+            margin-left: $size-sm;
           }
         }
+        display: flex;
       }
     }
+  }
+
+  @media (max-width: $mobile) {
+    width: calc(100vw - 32px);
   }
 }

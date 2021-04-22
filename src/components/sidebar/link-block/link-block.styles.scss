@@ -1,0 +1,53 @@
+@use "../../../scss//consts" as *;
+
+.link-block-component {
+  margin-right: $size-md;
+  padding-bottom: 11px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid $backgroud-faint-color;
+
+  p {
+    text-align: left;
+    color: $backgroud-color;
+    margin: 0;
+
+    &:before {
+      content: "";
+      position: relative;
+      display: inline-flex;
+      top: 1rem;
+      height: 3rem;
+      width: 0px;
+      margin-right: $size-md;
+      transition: width 0.2s ease;
+      background-color: $backgroud-faint-color;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    p {
+      color: $backgroud-color;
+      &:before {
+        width: $size-md;
+        margin-right: $size-md;
+        transition: width 0.2s ease;
+      }
+    }
+  }
+
+  &.selected {
+    border-bottom: 1px solid $secondary-color;
+    p {
+      color: $backgroud-color;
+      &:before {
+        width: $size-md;
+        margin-right: $size-md;
+        background-color: $secondary-color;
+      }
+    }
+  }
+}
