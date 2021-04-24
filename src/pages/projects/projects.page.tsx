@@ -1,3 +1,4 @@
+import { MouseEvent, MouseEventHandler } from "react";
 import { Fab } from "../../components/fab/fab.component";
 import "./projects.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,8 @@ import { Card } from "../../components/Card/card.component";
 
 export const ProjectsPage = () => {
   const { createAProject, projects } = useContext(StoreContext);
+
+  const handleCardClick = (event: MouseEventHandler<HTMLDivElement>) => {};
 
   return (
     <div className="projects-page">
@@ -21,6 +24,7 @@ export const ProjectsPage = () => {
                   title={project.title}
                   line1={project.created}
                   line2={project.description}
+                  cardClick={() => handleCardClick}
                 />
               </div>
             );
