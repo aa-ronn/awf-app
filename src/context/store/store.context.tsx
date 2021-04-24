@@ -11,6 +11,8 @@ const StoreContext = createContext<StoreContextType>({
   getASingleProject: async (id: string) => "",
   createAProject: async (title: string, description: string) => "",
   deleteAProject: async (id: string) => "",
+  updateAProject: async (id: string, title?: string, description?: string) =>
+    "",
 });
 
 const StoreProvider: FC = ({ children }) => {
@@ -159,6 +161,11 @@ const StoreProvider: FC = ({ children }) => {
         });
     });
 
+  /**
+   * Deletes a specific project from list
+   * @param id ID of selected project
+   * @returns Promise of success or failuer
+   */
   const deleteAProject = (id: string): Promise<string> =>
     new Promise((resolve, reject) => {
       axios({
@@ -170,6 +177,63 @@ const StoreProvider: FC = ({ children }) => {
       });
     });
 
+  /**
+   * Updates a single project title and/or description based on a project id, if a user
+   * is currently authenticated.
+   * @param id The id of the project to be updated.
+   * @param title Optional - the new title value.
+   * @param description Optional - the new description.
+   * @returns Promise of success or failure.
+   */
+  const updateAProject = (
+    id: string,
+    title?: string,
+    description?: string
+  ): Promise<string> =>
+    new Promise((resolve, reject) => {
+      if (!title && !description) {
+        reject("No values provided to title and description");
+      }
+
+      let data: any = {};
+
+      if (title && description) {
+        data = { title: title, description: description };
+      } else if (!title && description) {
+        data = { description: description };
+      } else if (!description && title) {
+        data = { title: title };
+      }
+
+      axios({
+        method: "put",
+        url: "http://localhost:5000/projects/" + id,
+        headers: {
+          authorization: token,
+        },
+        data,
+      })
+        .then((res: any) => {
+          console.log(res.data);
+          const receivedProject = new Project(
+            res.data.project.id,
+            res.data.project.title,
+            res.data.project.description,
+            res.data.project.members,
+            null,
+            null
+          );
+          setProject(receivedProject);
+        })
+        .then(() => {
+          resolve("Received Project");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
   return (
     <StoreContext.Provider
       value={{
@@ -179,6 +243,7 @@ const StoreProvider: FC = ({ children }) => {
         getASingleProject,
         createAProject,
         deleteAProject,
+        updateAProject,
       }}
     >
       {children}
