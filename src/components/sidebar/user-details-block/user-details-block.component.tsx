@@ -11,8 +11,10 @@ export const UserDetailsBlock = () => {
         <p>{user ? user.firstName[0] + user.lastName[0] : ""}</p>
       </div>
       <div className="user-details">
-        <p className="name">Aaron Perry</p>
-        <p className="email">aaron@email.com</p>
+        <p className="name">
+          {user ? user.firstName + " " + user.lastName : "Hey Friend!"}
+        </p>
+        <p className="email">{user ? user.email : "No email found"}</p>
         {/* <p className="profile-link">view profile</p> */}
       </div>
     </div>

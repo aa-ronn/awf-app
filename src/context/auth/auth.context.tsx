@@ -1,6 +1,7 @@
 import axios from "axios";
 import { FC, createContext, useState } from "react";
-import { AuthContextType, User } from "../../types/auth.types";
+import { AuthContextType } from "../../types/auth-context";
+import { User } from "../../models/user";
 
 const AuthContext = createContext<AuthContextType>({
   token: null,
@@ -15,7 +16,9 @@ const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   /**
-   * Logs a user in based off input username and password.
+   * Signs up new a user..
+   * @param firstName the users first name
+   * @param lastName the users last name
    * @param email the users email
    * @param password the users password
    * @returns promise of success or failure

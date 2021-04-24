@@ -14,6 +14,7 @@ import { Sidebar } from "./components/sidebar/sidebar.component";
 import { ProjectsPage } from "./pages/projects/projects.page";
 import { TasksPage } from "./pages/tasks/tasks.page";
 import _404Page from "./pages/_404/_404.page";
+import { StoreProvider } from "./context/store/store.context";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -26,32 +27,34 @@ function App() {
     );
   } else {
     return (
-      <div className="app">
-        <BrowserRouter>
-          <div className="sidebar-position">
-            <Sidebar />
-            <div className="page-postion">
-              <Header />
-              <Switch>
-                <Route exact path="/" component={ProjectsPage} />
-                <Route exact path="/projects" component={ProjectsPage} />
-                <Route exact path="/tasks" component={TasksPage} />
-                <Route
-                  exact
-                  path="/projects/:selectedProjectID"
-                  component={ProjectsPage}
-                />
-                <Route
-                  exact
-                  path="/projects/:selectedProjectID/tasks/:selectedTaskID"
-                  component={ProjectsPage}
-                />
-                <Route exact path="*" component={_404Page} />
-              </Switch>
+      <StoreProvider>
+        <div className="app">
+          <BrowserRouter>
+            <div className="sidebar-position">
+              <Sidebar />
+              <div className="page-postion">
+                <Header />
+                <Switch>
+                  <Route exact path="/" component={ProjectsPage} />
+                  <Route exact path="/projects" component={ProjectsPage} />
+                  <Route exact path="/tasks" component={TasksPage} />
+                  <Route
+                    exact
+                    path="/projects/:selectedProjectID"
+                    component={ProjectsPage}
+                  />
+                  <Route
+                    exact
+                    path="/projects/:selectedProjectID/tasks/:selectedTaskID"
+                    component={ProjectsPage}
+                  />
+                  <Route exact path="*" component={_404Page} />
+                </Switch>
+              </div>
             </div>
-          </div>
-        </BrowserRouter>
-      </div>
+          </BrowserRouter>
+        </div>
+      </StoreProvider>
     );
   }
 }
