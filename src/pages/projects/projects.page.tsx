@@ -3,6 +3,7 @@ import "./projects.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect } from "react";
 import { StoreContext } from "../../context/store/store.context";
+import { Card } from "../../components/Card/card.component";
 
 export const ProjectsPage = () => {
   const {
@@ -20,11 +21,17 @@ export const ProjectsPage = () => {
     <div className="projects-page">
       <div className="content">
         {projects &&
-          projects.map((project) => {
+          projects.map((project, index) => {
             return (
-              <p key={project.id} onClick={() => getASingleProject(project.id)}>
-                {project.title}
-              </p>
+              <div key={index}>
+                <Card
+                  id={project.id}
+                  type="project"
+                  title={project.title}
+                  line1={project.created}
+                  line2={project.description}
+                />
+              </div>
             );
           })}
         <Fab
@@ -33,7 +40,8 @@ export const ProjectsPage = () => {
           onClick={() =>
             createAProject(
               "Test Project " + projects?.length.toString(),
-              "Test Description " + projects?.length.toString()
+              "Test Description " + projects?.length.toString(),
+              "Test Start Date" + "2021/04/24"
             )
           }
         />

@@ -9,7 +9,12 @@ const StoreContext = createContext<StoreContextType>({
   project: null,
   getAllProjects: async () => "",
   getASingleProject: async (id: string) => "",
-  createAProject: async (title: string, description: string) => "",
+  createAProject: async (
+    title: string,
+    description: string,
+    startDate: string
+  ) => "",
+  deleteAProject: async (id: string) => "",
 });
 
 const StoreProvider: FC = ({ children }) => {
@@ -44,7 +49,7 @@ const StoreProvider: FC = ({ children }) => {
                 proj.id,
                 proj.title,
                 proj.description,
-                null,
+                proj.created,
                 null,
                 null
               )
@@ -106,7 +111,8 @@ const StoreProvider: FC = ({ children }) => {
    */
   const createAProject = (
     title: string,
-    description: string
+    description: string,
+    created: string
   ): Promise<string> =>
     new Promise((resolve, reject) => {
       axios({
@@ -118,6 +124,7 @@ const StoreProvider: FC = ({ children }) => {
         data: {
           title: title,
           description: description,
+          created: created,
         },
       })
         .then((res: any) => {
@@ -129,7 +136,7 @@ const StoreProvider: FC = ({ children }) => {
                 res.data.project.id,
                 res.data.project.title,
                 res.data.project.description,
-                null,
+                res.data.project.created,
                 null,
                 null
               ),
@@ -141,7 +148,7 @@ const StoreProvider: FC = ({ children }) => {
                   res.data.project.id,
                   res.data.project.title,
                   res.data.project.description,
-                  null,
+                  res.data.project.created,
                   null,
                   null
                 )
@@ -158,6 +165,36 @@ const StoreProvider: FC = ({ children }) => {
         });
     });
 
+  const deleteAProject = (id: string): Promise<string> =>
+    new Promise((resolve, reject) => {
+      axios({
+        method: "delete",
+        url: "http://localhost:5000/projects/" + id,
+        headers: {
+          authorization: token,
+        },
+      });
+      // .then((res: any) => {
+      //   console.log(res.data);
+      //   const receivedProject = new Project(
+      //     res.data.project.id,
+      //     res.data.project.title,
+      //     res.data.project.description,
+      //     res.data.project.members,
+      //     null,
+      //     null
+      //   );
+      //   setProject(receivedProject);
+      // })
+      // .then(() => {
+      //   resolve("Received Deleted");
+      // })
+      // .catch((err) => {
+      //   console.log(err);
+      //   reject(err);
+      // });
+    });
+
   return (
     <StoreContext.Provider
       value={{
@@ -166,6 +203,7 @@ const StoreProvider: FC = ({ children }) => {
         getAllProjects,
         getASingleProject,
         createAProject,
+        deleteAProject,
       }}
     >
       {children}

@@ -1,0 +1,39 @@
+@use "../../scss/consts" as *;
+
+.card-component-wrapper {
+  padding: 1.5rem;
+  display: flex;
+  width: calc(40vw);
+  margin-bottom: 2rem;
+  border: 3px solid $border-color;
+  border-radius: 15px;
+  justify-content: space-between;
+  background-color: $tertiary-color;
+  box-shadow: 10px 10px 5px #aaaaaa;
+  &:hover {
+    cursor: pointer;
+    border: 3px solid $primary-highlight-color;
+    background-color: $backgroud-color;
+  }
+  .card-info {
+    :nth-child(1) {
+      font-weight: bold;
+    }
+    &.task {
+      display: flex;
+      align-items: center;
+      :nth-child(1) {
+        font-weight: bold;
+      }
+      :nth-child(2) {
+        margin: 0 1rem;
+      }
+    }
+  }
+  .card-button-wrapper {
+    display: flex;
+    align-items: center;
+    width: 10rem;
+    justify-content: space-around;
+  }
+}
