@@ -6,4 +6,9 @@ export type StoreContextType = {
   getAllProjects: () => Promise<string>;
   getASingleProject: (id: string) => Promise<string>;
   createAProject: (title: string, description: string) => Promise<string>;
+  updateAProject: (
+    id: string,
+    title?: string,
+    description?: string
+  ) => Promise<string>;
 };
