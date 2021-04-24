@@ -38,7 +38,7 @@
     justify-content: space-around;
     :nth-child(2) {
       &:hover {
-        background-color: red;
+        background-color: $delete-color;
       }
     }
   }

@@ -24,3 +24,23 @@
     color: $font-color-tertiary;
   }
 }
+
+@mixin scrollable {
+  padding-right: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $tertiary-color;
+    border-radius: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $primary-color;
+    border-radius: 20px;
+  }
+}

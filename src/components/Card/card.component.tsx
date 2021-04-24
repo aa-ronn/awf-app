@@ -17,7 +17,9 @@ export const Card: FC<ICard> = ({ id, type, title, line1, line2 }) => {
       <div className={`card-info ${type === "project" ? "" : "task"}`}>
         <div className="title">{title}</div>
         <div className="date">
-          {type === "task" ? "Start: " + line1 : "Started: " + line1}
+          {type === "task"
+            ? "Start: " + line1?.substring(0, 10)
+            : "Started: " + line1?.substring(0, 10)}
         </div>
         <div className="description">
           {type === "task" ? "End: " + line2 : "Description: " + line2}
