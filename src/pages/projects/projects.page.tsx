@@ -1,21 +1,12 @@
 import { Fab } from "../../components/fab/fab.component";
 import "./projects.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { StoreContext } from "../../context/store/store.context";
 import { Card } from "../../components/Card/card.component";
 
 export const ProjectsPage = () => {
-  const {
-    getAllProjects,
-    createAProject,
-    getASingleProject,
-    projects,
-  } = useContext(StoreContext);
-
-  useEffect(() => {
-    getAllProjects();
-  }, []);
+  const { createAProject, projects } = useContext(StoreContext);
 
   return (
     <div className="projects-page">

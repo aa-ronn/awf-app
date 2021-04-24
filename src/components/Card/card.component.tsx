@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from "react";
+import { FC, useContext } from "react";
 import { StoreContext } from "../../context/store/store.context";
 import "./card.styles.scss";
 

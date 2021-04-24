@@ -153,6 +153,9 @@ const StoreProvider: FC = ({ children }) => {
           }
         })
         .then(() => {
+          getAllProjects();
+        })
+        .then(() => {
           resolve("Projects Created");
         })
         .catch((err) => {
@@ -174,7 +177,17 @@ const StoreProvider: FC = ({ children }) => {
         headers: {
           authorization: token,
         },
-      });
+      })
+        .then(() => {
+          getAllProjects();
+        })
+        .then(() => {
+          resolve("Deleted Project");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
     });
 
   /**
@@ -226,7 +239,10 @@ const StoreProvider: FC = ({ children }) => {
           setProject(receivedProject);
         })
         .then(() => {
-          resolve("Received Project");
+          getAllProjects();
+        })
+        .then(() => {
+          resolve("Updated Project");
         })
         .catch((err) => {
           console.log(err);
