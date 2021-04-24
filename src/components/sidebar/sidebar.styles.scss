@@ -45,7 +45,7 @@
   padding-right: $size-sm;
   height: 100vh;
 
-  @media (max-width: $mobile) {
+  @media (max-width: $tablet) {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -58,7 +58,7 @@
     margin-top: $size-md;
     color: $backgroud-color;
 
-    @media (max-width: $mobile) {
+    @media (max-width: $tablet) {
       margin-top: $size-xlg;
     }
   }

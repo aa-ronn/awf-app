@@ -15,6 +15,7 @@ import { ProjectsPage } from "./pages/projects/projects.page";
 import { TasksPage } from "./pages/tasks/tasks.page";
 import _404Page from "./pages/_404/_404.page";
 import { StoreProvider } from "./context/store/store.context";
+import { ProjectPage } from "./pages/project/project.page";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -41,7 +42,7 @@ function App() {
                   <Route
                     exact
                     path="/projects/:selectedProjectID"
-                    component={ProjectsPage}
+                    component={ProjectPage}
                   />
                   <Route
                     exact

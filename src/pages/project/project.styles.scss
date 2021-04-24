@@ -1,0 +1,62 @@
+@use "../../scss/_consts.scss" as *;
+
+.project-page {
+  margin: $size-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    p {
+      margin-top: 2px;
+      cursor: pointer;
+    }
+  }
+
+  .content {
+    display: grid;
+    gap: $size-md;
+    grid-template-columns: 1fr 300px;
+    height: calc(100vh - 175px);
+    width: fit-content;
+    @include scrollable;
+
+    .title-and-button {
+      margin-bottom: $size-md;
+      margin-top: $size-sm;
+      h2 {
+        margin: 0;
+      }
+      display: flex;
+      align-items: center;
+
+      button {
+        margin-left: $size-md;
+      }
+    }
+
+    .project-tasks-section {
+    }
+
+    .project-members-section {
+    }
+
+    @media (max-width: $desktop) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: $tablet) {
+    .content {
+      width: 100%;
+    }
+  }
+}

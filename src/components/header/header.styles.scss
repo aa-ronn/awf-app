@@ -39,7 +39,7 @@
     }
   }
 
-  @media (max-width: $mobile) {
+  @media (max-width: $tablet) {
     width: calc(100vw - 32px);
   }
 }

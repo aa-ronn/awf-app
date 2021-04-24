@@ -12,15 +12,53 @@
   justify-content: center;
   align-items: center;
   @include sub-title-font;
-  color: $font-color-primary;
-  background-color: $backgroud-color;
-  @include border-main();
+  color: $font-color-tertiary;
+  border-radius: 10px;
+  background-color: $secondary-color;
   padding: 5px 10px;
   max-height: $size-lg;
   cursor: pointer;
+  box-shadow: $box-shadow;
+  border: 1px solid $secondary-color;
 
   &:hover {
+    border: 1px solid $primary-highlight-color;
+    background-color: $primary-highlight-color;
+    box-shadow: 6px 6px 4px #a3a3a3;
+    transform: scale(0.98);
+
+    &.delete {
+      border: 1px solid $delete-color;
+    }
+  }
+}
+
+@mixin scrollable {
+  padding-right: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $tertiary-color;
+    border-radius: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
     background-color: $primary-color;
-    color: $font-color-tertiary;
+    border-radius: 20px;
+  }
+}
+
+@mixin editable-on-click {
+  &.editable-on-click {
+    border: 2px solid $backgroud-color;
+    &:hover {
+      cursor: pointer;
+      outline: 2px solid $primary-highlight-color;
+    }
   }
 }

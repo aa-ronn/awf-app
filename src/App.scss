@@ -7,6 +7,10 @@
 
   .sidebar-position {
     display: flex;
+
+    @media (max-width: $tablet) {
+      display: block;
+    }
   }
 
   .pages-position {
@@ -15,6 +19,12 @@
   }
 
   //global styles
+  h1,
+  h2,
+  p {
+    @include editable-on-click;
+  }
+
   h1 {
     @include title-font;
   }

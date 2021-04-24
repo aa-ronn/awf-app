@@ -19,10 +19,10 @@
   justify-content: center;
 
   &:hover {
-    background-color: $primary-color;
     transform: scale(1.02);
     cursor: pointer;
-    box-shadow: 0px 0px 10px 0px $border-color;
+    background-color: $primary-highlight-color;
+    box-shadow: 6px 6px 4px #a3a3a3;
   }
 
   &.pill {

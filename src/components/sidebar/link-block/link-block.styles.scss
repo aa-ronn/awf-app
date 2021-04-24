@@ -26,8 +26,37 @@
     }
   }
 
+  .floating-todo-number-position {
+    position: relative;
+    left: 5px;
+    transition: left 0.2s ease;
+
+    .floating-todo-number {
+      position: absolute;
+      top: -30px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: $delete-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        margin-top: 2px;
+        @include small-regular-font;
+        color: $font-color-tertiary;
+      }
+    }
+  }
+
   &:hover {
     cursor: pointer;
+
+    .floating-todo-number-position {
+      left: $size-md;
+      transition: left 0.2s ease;
+    }
 
     p {
       color: $backgroud-color;
@@ -41,6 +70,12 @@
 
   &.selected {
     border-bottom: 1px solid $secondary-color;
+
+    .floating-todo-number-position {
+      left: calc(5px + #{$size-md});
+      transition: left 0.2s ease;
+    }
+
     p {
       color: $backgroud-color;
       &:before {

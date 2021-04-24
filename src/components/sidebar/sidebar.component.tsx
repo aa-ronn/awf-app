@@ -13,7 +13,7 @@ export const Sidebar: FC<ISidebar> = ({ title }) => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   useEffect(() => {
-    if (width <= 540) {
+    if (width <= 768) {
       setMenuIsOpen(false);
     }
   }, [width]);
@@ -29,7 +29,7 @@ export const Sidebar: FC<ISidebar> = ({ title }) => {
     </Fragment>
   );
 
-  if (width <= 540) {
+  if (width <= 768) {
     return (
       <>
         <div

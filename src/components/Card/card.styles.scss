@@ -1,21 +1,30 @@
 @use "../../scss/consts" as *;
 
 .card-component-wrapper {
+  z-index: 2;
   padding: 1.5rem;
   display: flex;
   width: calc(40vw);
   margin-bottom: 2rem;
+  margin-right: 2rem;
   border: 3px solid $border-color;
   border-radius: 15px;
   justify-content: space-between;
   background-color: $tertiary-color;
-  box-shadow: 10px 10px 5px #aaaaaa;
+  box-shadow: $box-shadow;
+
+  @media (max-width: $tablet) {
+    width: 87%;
+  }
+
   &:hover {
     cursor: pointer;
     border: 3px solid $primary-highlight-color;
     background-color: $backgroud-color;
   }
+
   .card-info {
+    width: 100%;
     :nth-child(1) {
       font-weight: bold;
     }
@@ -32,8 +41,23 @@
   }
   .card-button-wrapper {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    width: 10rem;
     justify-content: space-around;
+    :nth-child(2) {
+      margin-left: $size-md;
+      &:hover {
+        background-color: $delete-color;
+      }
+    }
+
+    @media (max-width: $desktop) {
+      flex-direction: column;
+      justify-content: center;
+      :nth-child(2) {
+        margin-left: 0;
+        margin-top: $size-sm;
+      }
+    }
   }
 }

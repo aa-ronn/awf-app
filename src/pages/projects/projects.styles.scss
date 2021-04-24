@@ -2,4 +2,23 @@
 
 .projects-page {
   margin: $size-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin-top: 0;
+  }
+
+  .content {
+    height: calc(100vh - 140px);
+    width: fit-content;
+    @include scrollable;
+  }
+
+  @media (max-width: $tablet) {
+    .content {
+      width: 100%;
+    }
+  }
 }

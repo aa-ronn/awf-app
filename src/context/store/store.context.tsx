@@ -16,7 +16,7 @@ import { AuthContext } from "../auth/auth.context";
 const StoreContext = createContext<StoreContextType>({
   projects: null,
   workingProject: null,
-  tasks: null,
+  assignedTasks: null,
   workingTask: null,
   getASingleProject: async (id: string) => "",
   createAProject: async (title: string, description: string) => "",
@@ -29,13 +29,21 @@ const StoreContext = createContext<StoreContextType>({
     description: string,
     dueDate?: string
   ) => "",
+  updateATask: async (
+    ttaskId: string,
+    projectId: string,
+    title: string,
+    description: string,
+    dueDate?: string
+  ) => "",
+  deleteATask: async (ttaskId: string, projectId: string) => "",
 });
 
 const StoreProvider: FC = ({ children }) => {
   const { token } = useContext(AuthContext);
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [workingProject, setWorkingProject] = useState<Project | null>(null);
-  const [tasks, setTasks] = useState<Task[] | null>(null);
+  const [assignedTasks, setAssignedTasks] = useState<Task[] | null>(null);
   const [workingTask, setWorkingTask] = useState<Task | null>(null);
 
   /**
@@ -93,24 +101,53 @@ const StoreProvider: FC = ({ children }) => {
    */
   const getASingleProject = (id: string): Promise<string> =>
     new Promise((resolve, reject) => {
-      if (projects) {
-        const foundProjectID = findWithAttr(projects, "id", id);
+      axios({
+        method: "get",
+        url: "http://localhost:5000/projects/" + id,
+        headers: {
+          authorization: token,
+        },
+      })
+        .then((res: any) => {
+          console.log(res.data);
 
-        if (foundProjectID >= 0) {
-          setWorkingProject(projects[foundProjectID]);
-        } else {
-          reject("No Project With That ID Was Found");
-        }
-      } else {
-        reject("No Projects Found");
-      }
-      getAllTasksAssignedToAProject(id).then((result) => {
-        if (result) {
-          resolve("Project Found");
-        } else {
-          resolve("Unable To Get Project Tasks");
-        }
-      });
+          setWorkingProject(
+            new Project(
+              res.data.project.id,
+              res.data.project.title,
+              res.data.project.description,
+              [...res.data.project.members],
+              [...res.data.project.tasks],
+              res.data.project.created
+            )
+          );
+        })
+        .then(() => {
+          resolve("Project Details Received");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+      // if (projects) {
+      //   const foundProjectID = findWithAttr(projects, "id", id);
+      //   console.log(foundProjectID);
+
+      //   if (foundProjectID >= 0) {
+      //     setWorkingProject(projects[foundProjectID]);
+      //   } else {
+      //     reject("No Project With That ID Was Found");
+      //   }
+      // } else {
+      //   reject("No Projects Found");
+      // }
+      // getAllTasksAssignedToAProject(id).then((result) => {
+      //   if (result) {
+      //     resolve("Project Found");
+      //   } else {
+      //     resolve("Unable To Get Project Tasks");
+      //   }
+      // });
     });
 
   /**
@@ -302,7 +339,7 @@ const StoreProvider: FC = ({ children }) => {
             )
           );
         }
-        setTasks(receivedTasks);
+        setAssignedTasks(receivedTasks);
       })
       .then(() => {
         return true;
@@ -323,7 +360,7 @@ const StoreProvider: FC = ({ children }) => {
     new Promise((resolve, reject) => {
       axios({
         method: "get",
-        url: `http://localhost:5000/${projectId}/tasks`,
+        url: `http://localhost:5000/projects/${projectId}/tasks`,
         headers: {
           authorization: token,
         },
@@ -344,7 +381,7 @@ const StoreProvider: FC = ({ children }) => {
           } else {
             reject("No Projects Found");
           }
-          setTasks(receivedTasks);
+          setAssignedTasks(receivedTasks);
         })
         .then(() => {
           resolve("Tasks Received");
@@ -356,7 +393,7 @@ const StoreProvider: FC = ({ children }) => {
     });
 
   /**
-   * Creates a new project associated with the currently logged in user.
+   * Creates a new task associated with a specified project.
    * @public
    * @param title The title of the new post.
    * @param description The description of the new post.
@@ -386,38 +423,106 @@ const StoreProvider: FC = ({ children }) => {
       })
         .then((res: any) => {
           console.log(res.data);
-          // if (projects) {
-          //   setProjects([
-          //     ...projects,
-          //     new Project(
-          //       res.data.project.id,
-          //       res.data.project.title,
-          //       res.data.project.description,
-          //       null,
-          //       null,
-          //       null
-          //     ),
-          //   ]);
-          // } else {
-          //   setProjects(
-          //     new Array<Project>(
-          //       new Project(
-          //         res.data.project.id,
-          //         res.data.project.title,
-          //         res.data.project.description,
-          //         null,
-          //         null,
-          //         null
-          //       )
-          //     )
-          //   );
-          // }
         })
         .then(async () => {
-          await getAllProjects();
+          await getASingleProject(projectId);
         })
         .then(() => {
           resolve("Task Created");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
+  /**
+   * Updates a specific task from a specified project, if the user to authenticated.
+   * @public
+   * @param taskId The task to be updated.
+   * @param projectId The project that contains the task.
+   * @param title Optional - The new title for the task.
+   * @param description Optional - The new description for the task.
+   * @param dueDate Optional - The new due date for the task.
+   * @returns Promise of success or failure
+   */
+  const updateATask = (
+    taskId: string,
+    projectId: string,
+    title: string,
+    description: string,
+    dueDate?: string
+  ): Promise<string> =>
+    new Promise((resolve, reject) => {
+      if (!title && !description && !dueDate) {
+        reject("No values provided to title, description, or due date");
+      }
+
+      let data: any = {};
+
+      if (title && description && dueDate) {
+        data = { title: title, description: description, due_date: dueDate };
+      } else if (!title && description && dueDate) {
+        data = { description: description, due_date: dueDate };
+      } else if (!description && title && dueDate) {
+        data = { title: title, due_date: dueDate };
+      } else if (!description && !title && dueDate) {
+        data = { due_date: dueDate };
+      } else if (!description && !title && dueDate) {
+        data = { due_date: dueDate };
+      } else if (!description && title && !dueDate) {
+        data = { title: title };
+      } else if (description && !title && !dueDate) {
+        data = { description: description };
+      }
+
+      axios({
+        method: "post",
+        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}`,
+        headers: {
+          authorization: token,
+        },
+        data,
+      })
+        .then((res: any) => {
+          console.log(res.data);
+        })
+        .then(async () => {
+          await getASingleProject(projectId);
+        })
+        .then(() => {
+          resolve("Task Updated");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
+  /**
+   * Deletes a specific task from a specified project, if the user to authenticated.
+   * @public
+   * @param taskId The task to be deleeted.
+   * @param projectId The project that contains the task.
+   * @returns Promise of success or failure
+   */
+  const deleteATask = (taskId: string, projectId: string): Promise<string> =>
+    new Promise((resolve, reject) => {
+      axios({
+        method: "delete",
+        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}`,
+        headers: {
+          authorization: token,
+        },
+      })
+        .then((res: any) => {
+          console.log(res.data);
+        })
+        .then(async () => {
+          await getASingleProject(projectId);
+        })
+        .then(() => {
+          resolve("Task Deleted");
         })
         .catch((err) => {
           console.log(err);
@@ -448,13 +553,15 @@ const StoreProvider: FC = ({ children }) => {
       value={{
         projects,
         workingProject,
-        tasks,
+        assignedTasks,
         workingTask,
         getASingleProject,
         createAProject,
         deleteAProject,
         updateAProject,
         createATask,
+        deleteATask,
+        updateATask,
       }}
     >
       {children}
