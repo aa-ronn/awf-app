@@ -28,4 +28,22 @@ export type StoreContextType = {
     dueDate?: string
   ) => Promise<string>;
   deleteATask: (taskId: string, projectId: string) => Promise<string>;
+  addMemberToAProject: (
+    projectId: string,
+    memberEmail: string
+  ) => Promise<string>;
+  deleteMemberFromAProject: (
+    projectId: string,
+    memberEmail: string
+  ) => Promise<string>;
+  addMemberToAProjectTask: (
+    taskId: string,
+    projectId: string,
+    memberEmail: string
+  ) => Promise<string>;
+  deleteMemberFromAProjectTask: (
+    taskId: string,
+    projectId: string,
+    memberEmail: string
+  ) => Promise<string>;
 };

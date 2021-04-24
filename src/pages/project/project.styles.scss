@@ -30,8 +30,11 @@
     @include scrollable;
 
     .title-and-button {
+      position: sticky;
+      top: 0;
+      background-color: $backgroud-color;
       margin-bottom: $size-md;
-      margin-top: $size-sm;
+      padding-top: $size-sm;
       h2 {
         margin: 0;
       }

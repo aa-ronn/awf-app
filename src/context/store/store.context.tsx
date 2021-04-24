@@ -30,13 +30,26 @@ const StoreContext = createContext<StoreContextType>({
     dueDate?: string
   ) => "",
   updateATask: async (
-    ttaskId: string,
+    taskId: string,
     projectId: string,
     title: string,
     description: string,
     dueDate?: string
   ) => "",
   deleteATask: async (ttaskId: string, projectId: string) => "",
+  addMemberToAProject: async (projectId: string, memberEmail: string) => "",
+  deleteMemberFromAProject: async (projectId: string, memberEmail: string) =>
+    "",
+  addMemberToAProjectTask: async (
+    taskId: string,
+    projectId: string,
+    memberEmail: string
+  ) => "",
+  deleteMemberFromAProjectTask: async (
+    taskId: string,
+    projectId: string,
+    memberEmail: string
+  ) => "",
 });
 
 const StoreProvider: FC = ({ children }) => {
@@ -129,25 +142,6 @@ const StoreProvider: FC = ({ children }) => {
           console.log(err);
           reject(err);
         });
-      // if (projects) {
-      //   const foundProjectID = findWithAttr(projects, "id", id);
-      //   console.log(foundProjectID);
-
-      //   if (foundProjectID >= 0) {
-      //     setWorkingProject(projects[foundProjectID]);
-      //   } else {
-      //     reject("No Project With That ID Was Found");
-      //   }
-      // } else {
-      //   reject("No Projects Found");
-      // }
-      // getAllTasksAssignedToAProject(id).then((result) => {
-      //   if (result) {
-      //     resolve("Project Found");
-      //   } else {
-      //     resolve("Unable To Get Project Tasks");
-      //   }
-      // });
     });
 
   /**
@@ -229,8 +223,8 @@ const StoreProvider: FC = ({ children }) => {
           authorization: token,
         },
       })
-        .then(() => {
-          getAllProjects();
+        .then(async () => {
+          await getAllProjects();
         })
         .then(() => {
           resolve("Deleted Project");
@@ -302,6 +296,80 @@ const StoreProvider: FC = ({ children }) => {
         });
     });
 
+  /**
+   * Adds a new member to a specified project, if the user is authenticated.
+   * @public
+   * @param projectId ID of selected project
+   * @param memberEmail The email of the invited member.
+   * @returns Promise of success or failuer
+   */
+  const addMemberToAProject = (
+    projectId: string,
+    memberEmail: string
+  ): Promise<string> =>
+    new Promise((resolve, reject) => {
+      if (!projectId || !memberEmail) {
+        reject("A project ID and an email must be provided");
+      }
+      axios({
+        method: "post",
+        url: `http://localhost:5000/projects/${projectId}/members`,
+        headers: {
+          authorization: token,
+        },
+        data: {
+          email: memberEmail,
+        },
+      })
+        .then(async () => {
+          await getASingleProject(projectId);
+        })
+        .then(() => {
+          resolve("Member Added To Project");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
+  /**
+   * Adds a new member to a specified project, if the user is authenticated.
+   * @public
+   * @param projectId ID of selected project
+   * @param memberEmail The email of the invited member.
+   * @returns Promise of success or failuer
+   */
+  const deleteMemberFromAProject = (
+    projectId: string,
+    memberEmail: string
+  ): Promise<string> =>
+    new Promise((resolve, reject) => {
+      if (!projectId || !memberEmail) {
+        reject("A project ID and an email must be provided");
+      }
+      axios({
+        method: "delete",
+        url: `http://localhost:5000/projects/${projectId}/members`,
+        headers: {
+          authorization: token,
+        },
+        data: {
+          email: memberEmail,
+        },
+      })
+        .then(async () => {
+          await getASingleProject(projectId);
+        })
+        .then(() => {
+          resolve("Member Deleted From Project");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
   //!!---------------!!//
   //!! TASKS SECTION !!//
   //!!---------------!!//
@@ -349,48 +417,6 @@ const StoreProvider: FC = ({ children }) => {
         return false;
       });
   }, [token]);
-
-  /**
-   * Gets a single task based off it's id , if the user is authenticated.
-   * @public
-   * @param id The id of the post to fetch.
-   * @returns Promise of success or failure
-   */
-  const getAllTasksAssignedToAProject = (projectId: string): Promise<string> =>
-    new Promise((resolve, reject) => {
-      axios({
-        method: "get",
-        url: `http://localhost:5000/projects/${projectId}/tasks`,
-        headers: {
-          authorization: token,
-        },
-      })
-        .then((res: any) => {
-          console.log(res.data);
-          let receivedTasks = new Array<Task>();
-
-          if (projects) {
-            const foundProjectID = findWithAttr(projects, "id", projectId);
-            projects[foundProjectID].tasks = [...receivedTasks];
-            if (foundProjectID >= 0) {
-              setProjects([...projects]);
-              setWorkingProject(projects[foundProjectID]);
-            } else {
-              reject("No Project With That ID Was Found");
-            }
-          } else {
-            reject("No Projects Found");
-          }
-          setAssignedTasks(receivedTasks);
-        })
-        .then(() => {
-          resolve("Tasks Received");
-        })
-        .catch((err) => {
-          console.log(err);
-          reject(err);
-        });
-    });
 
   /**
    * Creates a new task associated with a specified project.
@@ -477,7 +503,7 @@ const StoreProvider: FC = ({ children }) => {
       }
 
       axios({
-        method: "post",
+        method: "put",
         url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}`,
         headers: {
           authorization: token,
@@ -530,6 +556,82 @@ const StoreProvider: FC = ({ children }) => {
         });
     });
 
+  /**
+   * Adds a new member to a specified project, if the user is authenticated.
+   * @public
+   * @param projectId ID of selected project
+   * @param memberEmail The email of the invited member.
+   * @returns Promise of success or failuer
+   */
+  const addMemberToAProjectTask = (
+    taskId: string,
+    projectId: string,
+    memberEmail: string
+  ): Promise<string> =>
+    new Promise((resolve, reject) => {
+      if (!projectId || !memberEmail) {
+        reject("A task ID, project ID and an email must be provided");
+      }
+      axios({
+        method: "post",
+        url: `http://localhost:5000/projects/${projectId}/members/${taskId}/assigned`,
+        headers: {
+          authorization: token,
+        },
+        data: {
+          email: memberEmail,
+        },
+      })
+        .then(async () => {
+          await getASingleProject(projectId);
+        })
+        .then(() => {
+          resolve("Member Added To Project Task");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
+  /**
+   * Adds a new member to a specified project, if the user is authenticated.
+   * @public
+   * @param projectId ID of selected project
+   * @param memberEmail The email of the invited member.
+   * @returns Promise of success or failuer
+   */
+  const deleteMemberFromAProjectTask = (
+    taskId: string,
+    projectId: string,
+    memberEmail: string
+  ): Promise<string> =>
+    new Promise((resolve, reject) => {
+      if (!projectId || !memberEmail) {
+        reject("A task ID, project ID and an email must be provided");
+      }
+      axios({
+        method: "delete",
+        url: `http://localhost:5000/projects/${projectId}/members/${taskId}/assigned`,
+        headers: {
+          authorization: token,
+        },
+        data: {
+          email: memberEmail,
+        },
+      })
+        .then(async () => {
+          await getASingleProject(projectId);
+        })
+        .then(() => {
+          resolve("Member Deleted From Project Task");
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
+
   //**----------------**//
   //** GLOBAL SECTION **//
   //**----------------**//
@@ -562,6 +664,10 @@ const StoreProvider: FC = ({ children }) => {
         createATask,
         deleteATask,
         updateATask,
+        addMemberToAProject,
+        deleteMemberFromAProject,
+        addMemberToAProjectTask,
+        deleteMemberFromAProjectTask,
       }}
     >
       {children}
