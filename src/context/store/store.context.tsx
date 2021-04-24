@@ -1,5 +1,12 @@
 import axios from "axios";
-import { FC, createContext, useState, useContext } from "react";
+import {
+  FC,
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import { Project } from "../../models/project";
 import { StoreContextType } from "../../types/store-context";
 import { AuthContext } from "../auth/auth.context";
@@ -7,7 +14,6 @@ import { AuthContext } from "../auth/auth.context";
 const StoreContext = createContext<StoreContextType>({
   projects: null,
   project: null,
-  getAllProjects: async () => "",
   getASingleProject: async (id: string) => "",
   createAProject: async (title: string, description: string) => "",
   deleteAProject: async (id: string) => "",
@@ -21,55 +27,57 @@ const StoreProvider: FC = ({ children }) => {
   const [project, setProject] = useState<Project | null>(null);
 
   /**
-   * Logs a user in based off input username and password.
-   * @param email the users email
-   * @param password the users password
-   * @returns promise of success or failure
+   * Gets all projects for the currently authenticated user. Called from
+   * within the provider only.
+   * @private
+   * @returns Promise of success or failure
    */
-  const getAllProjects = (): Promise<string> =>
-    new Promise((resolve, reject) => {
-      axios({
-        method: "get",
-        url: "http://localhost:5000/projects",
-        headers: {
-          authorization: token,
-        },
-      })
-        .then((res: any) => {
-          console.log(res.data);
-          let receivedProjects = new Array<Project>();
-
-          for (let index = 0; index < res.data.projects.length; index++) {
-            const proj = res.data.projects[index];
-
-            receivedProjects.push(
-              new Project(
-                proj.id,
-                proj.title,
-                proj.description,
-                null,
-                null,
-                proj.created
-              )
-            );
-          }
-
-          setProjects(receivedProjects);
+  const getAllProjects = useCallback(
+    (): Promise<string> =>
+      new Promise((resolve, reject) => {
+        axios({
+          method: "get",
+          url: "http://localhost:5000/projects",
+          headers: {
+            authorization: token,
+          },
         })
-        .then(() => {
-          resolve("Projects Received");
-        })
-        .catch((err) => {
-          console.log(err);
-          reject(err);
-        });
-    });
+          .then((res: any) => {
+            console.log(res.data);
+            let receivedProjects = new Array<Project>();
+
+            for (let index = 0; index < res.data.projects.length; index++) {
+              const proj = res.data.projects[index];
+
+              receivedProjects.push(
+                new Project(
+                  proj.id,
+                  proj.title,
+                  proj.description,
+                  null,
+                  null,
+                  proj.created
+                )
+              );
+            }
+            setProjects(receivedProjects);
+          })
+          .then(() => {
+            resolve("Projects Received");
+          })
+          .catch((err) => {
+            console.log(err);
+            reject(err);
+          });
+      }),
+    [token]
+  );
 
   /**
-   * Logs a user in based off input username and password.
-   * @param email the users email
-   * @param password the users password
-   * @returns promise of success or failure
+   * Gets a single project based off it's id, if the user is authenticated.
+   * @public
+   * @param id The id of the post to fetch.
+   * @returns Promise of success or failure
    */
   const getASingleProject = (id: string): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -102,10 +110,11 @@ const StoreProvider: FC = ({ children }) => {
     });
 
   /**
-   * Logs a user in based off input username and password.
-   * @param email the users email
-   * @param password the users password
-   * @returns promise of success or failure
+   * Creates a new project associated with the currently logged in user.
+   * @public
+   * @param title The title of the new post.
+   * @param description The description of the new post.
+   * @returns Promise of success or failure
    */
   const createAProject = (
     title: string,
@@ -166,6 +175,7 @@ const StoreProvider: FC = ({ children }) => {
 
   /**
    * Deletes a specific project from list
+   * @public
    * @param id ID of selected project
    * @returns Promise of success or failuer
    */
@@ -193,6 +203,7 @@ const StoreProvider: FC = ({ children }) => {
   /**
    * Updates a single project title and/or description based on a project id, if a user
    * is currently authenticated.
+   * @public
    * @param id The id of the project to be updated.
    * @param title Optional - the new title value.
    * @param description Optional - the new description.
@@ -250,12 +261,15 @@ const StoreProvider: FC = ({ children }) => {
         });
     });
 
+  useEffect(() => {
+    getAllProjects();
+  }, [getAllProjects]);
+
   return (
     <StoreContext.Provider
       value={{
         projects,
         project,
-        getAllProjects,
         getASingleProject,
         createAProject,
         deleteAProject,
