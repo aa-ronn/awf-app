@@ -6,7 +6,12 @@ import { StoreContext } from "../../context/store/store.context";
 import { Card } from "../../components/Card/card.component";
 
 export const ProjectsPage = () => {
-  const { createAProject, projects } = useContext(StoreContext);
+  const {
+    createAProject,
+    getASingleProject,
+    createATask,
+    projects,
+  } = useContext(StoreContext);
 
   return (
     <div className="projects-page">
@@ -29,9 +34,15 @@ export const ProjectsPage = () => {
           icon={faPlus}
           text="Project"
           onClick={() =>
-            createAProject(
-              "Test Project " + projects?.length.toString(),
-              "Test Description " + projects?.length.toString()
+            // createAProject(
+            //   "Test Project " + projects?.length.toString(),
+            //   "Test Description " + projects?.length.toString()
+            // )
+            // getASingleProject("608434c715859d3e4448303e")
+            createATask(
+              "608434c715859d3e4448303e",
+              "Task Name",
+              "Task Description"
             )
           }
         />
