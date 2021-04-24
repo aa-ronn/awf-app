@@ -7,7 +7,7 @@
   align-items: center;
   .content {
     height: calc(100vh - 5rem);
-    width: 60%;
+    width: fit-content;
     @include scrollable;
   }
 }
