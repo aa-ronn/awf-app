@@ -9,11 +9,7 @@ const StoreContext = createContext<StoreContextType>({
   project: null,
   getAllProjects: async () => "",
   getASingleProject: async (id: string) => "",
-  createAProject: async (
-    title: string,
-    description: string,
-    startDate: string
-  ) => "",
+  createAProject: async (title: string, description: string) => "",
   deleteAProject: async (id: string) => "",
 });
 
@@ -49,9 +45,9 @@ const StoreProvider: FC = ({ children }) => {
                 proj.id,
                 proj.title,
                 proj.description,
-                proj.created,
                 null,
-                null
+                null,
+                proj.created
               )
             );
           }
@@ -111,8 +107,7 @@ const StoreProvider: FC = ({ children }) => {
    */
   const createAProject = (
     title: string,
-    description: string,
-    created: string
+    description: string
   ): Promise<string> =>
     new Promise((resolve, reject) => {
       axios({
@@ -124,7 +119,6 @@ const StoreProvider: FC = ({ children }) => {
         data: {
           title: title,
           description: description,
-          created: created,
         },
       })
         .then((res: any) => {
@@ -136,7 +130,7 @@ const StoreProvider: FC = ({ children }) => {
                 res.data.project.id,
                 res.data.project.title,
                 res.data.project.description,
-                res.data.project.created,
+                null,
                 null,
                 null
               ),
@@ -148,7 +142,7 @@ const StoreProvider: FC = ({ children }) => {
                   res.data.project.id,
                   res.data.project.title,
                   res.data.project.description,
-                  res.data.project.created,
+                  null,
                   null,
                   null
                 )
@@ -174,25 +168,6 @@ const StoreProvider: FC = ({ children }) => {
           authorization: token,
         },
       });
-      // .then((res: any) => {
-      //   console.log(res.data);
-      //   const receivedProject = new Project(
-      //     res.data.project.id,
-      //     res.data.project.title,
-      //     res.data.project.description,
-      //     res.data.project.members,
-      //     null,
-      //     null
-      //   );
-      //   setProject(receivedProject);
-      // })
-      // .then(() => {
-      //   resolve("Received Deleted");
-      // })
-      // .catch((err) => {
-      //   console.log(err);
-      //   reject(err);
-      // });
     });
 
   return (

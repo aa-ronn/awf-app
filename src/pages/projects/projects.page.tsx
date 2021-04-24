@@ -40,8 +40,7 @@ export const ProjectsPage = () => {
           onClick={() =>
             createAProject(
               "Test Project " + projects?.length.toString(),
-              "Test Description " + projects?.length.toString(),
-              "Test Start Date" + "2021/04/24"
+              "Test Description " + projects?.length.toString()
             )
           }
         />
