@@ -35,6 +35,10 @@
     .assigned-members {
       display: flex;
       align-items: center;
+
+      p {
+        margin-right: $size-md;
+      }
     }
     .card-texts-wrapper {
       display: flex;

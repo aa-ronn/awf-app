@@ -70,16 +70,20 @@ export const Card: FC<ICard> = ({
                   workingProject?.tasks[0].assignedTo.length}
             </div>
             <div className="assigned-members">
-              <Tooltip text="Assign Memeber to task">
-                <FontAwesomeIcon icon={faPlus} />
+              <Tooltip text="Assign a member to task">
+                <button>
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
               </Tooltip>
             </div>
           </Tooltip>
         ) : (
           <div className="assigned-members">
-            {"No Members Assigned "}
-            <Tooltip text="Assign a member">
-              <FontAwesomeIcon icon={faPlus} />
+            <p>No Members Assigned</p>
+            <Tooltip text="Assign a member to task">
+              <button>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
             </Tooltip>
           </div>
         )}
