@@ -10,7 +10,7 @@ interface ICard {
   line1: string | null;
   line2: string;
   line3?: string;
-  cardClick: MouseEventHandler<HTMLDivElement> | undefined;
+  cardClick?: MouseEventHandler<HTMLDivElement> | undefined;
 }
 
 export const Card: FC<ICard> = ({
@@ -28,7 +28,7 @@ export const Card: FC<ICard> = ({
     <div className="card-component-wrapper">
       <div
         className={`card-info ${type === "project" ? "" : "task"}`}
-        onClick={cardClick}
+        onClick={type === "project" ? cardClick : () => void ""}
       >
         <h3 className="title">{title}</h3>
         <div className="date">

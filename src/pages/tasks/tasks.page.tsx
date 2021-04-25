@@ -104,7 +104,7 @@ export const TasksPage = () => {
                     title={task.title}
                     line1={task.created}
                     line2={task.dueDate}
-                    cardClick={() => handleCardClick(taskId)}
+                    //cardClick={() => handleCardClick(taskId)}
                   />
                 </div>
               );

@@ -19,10 +19,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal } from "../../components/Modal/Modal.component";
 import { Form } from "../../components/form/form.component";
 import { Input } from "../../components/input/input.component";
+import { Select } from "../../components/Select/select.component";
 
 export const ProjectPage = () => {
   const {
     workingProject,
+    projects,
     createATask,
     deleteATask,
     getASingleProject,
@@ -31,6 +33,19 @@ export const ProjectPage = () => {
     deleteMemberFromAProject,
   } = useContext(StoreContext);
   const params = useParams<{ selectedProjectID: string }>();
+
+  const initialTaskState = { selectOption: "", title: "", description: "" };
+
+  // Setting the first project as the default value
+  // if (projects && projects.length > 0) {
+  //   initialTaskState.selectOption = projects[0].id;
+  // }
+
+  const [addTaskState, setAddTaskState] = useState<{
+    selectOption: string;
+    title: string;
+    description: string;
+  }>(initialTaskState);
 
   useEffect(() => {
     if (!workingProject) {
@@ -62,14 +77,17 @@ export const ProjectPage = () => {
       }));
   };
 
-  const handleFabClick = async () => {
-    workingProject &&
-      workingProject.tasks &&
-      (await createATask(
-        workingProject.id,
-        "Task Name " + workingProject.tasks.length,
-        "Task Description " + workingProject.tasks.length
-      ));
+  const handleFabClick = async (type: string) => {
+    // workingProject &&
+    //   workingProject.tasks &&
+    //   (await createATask(
+    //     workingProject.id,
+    //     "Task Name " + workingProject.tasks.length,
+    //     "Task Description " + workingProject.tasks.length
+    //   ));
+
+    setModalType(type);
+    setIsModalOpen(true);
   };
 
   const titleRef = useRef<HTMLHeadingElement | null>(null);
@@ -124,6 +142,7 @@ export const ProjectPage = () => {
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
   const [addMemberState, setAddMemberState] = useState("");
 
   const handleChange = (
@@ -135,8 +154,13 @@ export const ProjectPage = () => {
     const { value, name } = event.target;
     console.log(name);
     console.log(value);
-    if (name === "email") {
-      setAddMemberState(value);
+    if (modalType === "member") {
+      if (name === "email") {
+        setAddMemberState(value);
+      }
+    } else {
+      const { value, name } = event.target;
+      setAddTaskState({ ...addTaskState, [name]: value });
     }
   };
 
@@ -144,20 +168,33 @@ export const ProjectPage = () => {
     event.preventDefault();
 
     if (workingProject) {
-      await addMemberToAProject(workingProject.id, addMemberState)
-        .then((res) => {
-          console.log("added member: ", res);
-          setIsModalOpen(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (modalType === "member") {
+        await addMemberToAProject(workingProject.id, addMemberState)
+          .then((res) => {
+            console.log("added member: ", res);
+            setIsModalOpen(false);
+            setModalType("");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        const { selectOption, title, description } = addTaskState;
+        await createATask(selectOption, title, description)
+          .then((res) => {
+            console.log("added task: ", res);
+            setIsModalOpen(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   };
 
   return (
     <div className="project-page">
-      {isModalOpen && (
+      {isModalOpen && modalType === "member" && (
         <Modal setModalOpen={setIsModalOpen}>
           <Form
             title="Add a Member"
@@ -173,6 +210,40 @@ export const ProjectPage = () => {
               required
               handleChange={handleChange}
             />
+          </Form>
+        </Modal>
+      )}
+      {isModalOpen && modalType === "task" && (
+        <Modal setModalOpen={setIsModalOpen}>
+          <Form
+            title="Add a Task"
+            emoji="📖"
+            buttonLabel="Add Task"
+            handleSubmit={handleFormSubmit}
+          >
+            <Input
+              name="title"
+              label="Title"
+              type="text"
+              placeholder="Enter title"
+              required
+              handleChange={handleChange}
+            />
+            <Input
+              name="description"
+              label="Description"
+              type="text"
+              placeholder="Enter description"
+              required
+              handleChange={handleChange}
+            />
+            <Select
+              handleChange={handleChange}
+              label="Project"
+              list={projects?.map((project) => {
+                return { key: project.title, value: project.id };
+              })}
+            ></Select>
           </Form>
         </Modal>
       )}
@@ -234,7 +305,8 @@ export const ProjectPage = () => {
         <section className="project-members-section">
           <div className="title-and-button">
             <h2>Project Members</h2>
-            <button onClick={() => setIsModalOpen(true)}>
+
+            <button onClick={() => handleFabClick("member")}>
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
@@ -256,7 +328,7 @@ export const ProjectPage = () => {
           )}
         </section>
 
-        <Fab icon={faPlus} text="Task" onClick={() => handleFabClick()} />
+        <Fab icon={faPlus} text="Task" onClick={() => handleFabClick("task")} />
       </div>
     </div>
   );
