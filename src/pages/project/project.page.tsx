@@ -257,7 +257,7 @@ export const ProjectPage = () => {
           >
             {workingProject && workingProject.title}
           </h1>
-          <FontAwesomeIcon icon={faEdit} />
+          <FontAwesomeIcon icon={faEdit} className="right-side-icon" />
         </Tooltip>
         <Tooltip text="Click to edit">
           <p
@@ -268,7 +268,7 @@ export const ProjectPage = () => {
           >
             {workingProject && workingProject.description}
           </p>
-          <FontAwesomeIcon icon={faEdit} />
+          <FontAwesomeIcon icon={faEdit} className="right-side-icon" />
         </Tooltip>
       </div>
 
