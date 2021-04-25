@@ -276,7 +276,7 @@ export const ProjectPage = () => {
         <section className="project-tasks-section">
           <div className="title-and-button">
             <h2>Project Tasks</h2>
-            <button>
+            <button onClick={() => handleFabClick("task")}>
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
