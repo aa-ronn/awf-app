@@ -50,6 +50,10 @@
     }
 
     .project-members-section {
+      @include scrollable;
+      .member-card {
+        margin: 1rem 1rem;
+      }
     }
 
     @media (max-width: $desktop) {

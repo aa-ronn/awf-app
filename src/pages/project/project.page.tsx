@@ -4,6 +4,7 @@ import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect } from "react";
 import { StoreContext } from "../../context/store/store.context";
 import { Card } from "../../components/Card/card.component";
+import { MemberCard } from "../../components/Card/member-card/member-card.component";
 import { useParams } from "react-router-dom";
 import { Tooltip } from "../../components/tooltip/tooltip.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -86,6 +87,23 @@ export const ProjectPage = () => {
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
+          {workingProject &&
+            workingProject.tasks &&
+            workingProject.tasks.map((task, index) => {
+              return (
+                <div>
+                  <div className="member-card">
+                    <MemberCard
+                      key={index}
+                      email="john@email.com"
+                      firstName="John"
+                      lastName="Stanley"
+                      //cardClick={() => handleCardClick(index)}
+                    />
+                  </div>
+                </div>
+              );
+            })}
         </section>
 
         <Fab icon={faPlus} text="Task" onClick={() => handleFabClick()} />
