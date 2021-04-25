@@ -444,6 +444,15 @@ const StoreProvider: FC = ({ children }) => {
     dueDate?: string
   ): Promise<string> =>
     new Promise((resolve, reject) => {
+      if (!projectId && !title && !description && !dueDate) {
+        reject(
+          "No values provided to projectId, title, description, or due date"
+        );
+      }
+      if (!projectId || !title || !description) {
+        reject("A projectId, title, and description must be provided");
+      }
+
       let data: any = {};
       if (!dueDate) {
         data = { title: title, description: description };
@@ -461,7 +470,7 @@ const StoreProvider: FC = ({ children }) => {
       })
         .then(async (res: any) => {
           console.log(res.data);
-          await getAllTasksAssignedToAUser()
+          await getAllTasksAssignedToAUser();
         })
         .then(async () => {
           await getASingleProject(projectId);
@@ -649,15 +658,6 @@ const StoreProvider: FC = ({ children }) => {
   //**----------------**//
   //** GLOBAL SECTION **//
   //**----------------**//
-
-  const findWithAttr = (array: any, attr: any, value: any) => {
-    for (var i = 0; i < array.length; i += 1) {
-      if (array[i][attr] === value) {
-        return i;
-      }
-    }
-    return -1;
-  };
 
   useEffect(() => {
     getAllProjects();
