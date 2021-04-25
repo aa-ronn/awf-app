@@ -24,7 +24,7 @@ export const Sidebar: FC<ISidebar> = ({ title }) => {
       <UserDetailsBlock />
       <div className="link-blocks">
         <LinkBlock text="📓  Projects" urlPath="/" />
-        <LinkBlock text="📖  Tasks" urlPath="/tasks" />
+        <LinkBlock text="📖  Your Tasks" urlPath="/tasks" />
       </div>
     </Fragment>
   );
