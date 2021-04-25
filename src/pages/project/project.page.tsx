@@ -1,7 +1,7 @@
 import { Fab } from "../../components/fab/fab.component";
 import "./project.styles.scss";
 import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { MutableRefObject, useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { StoreContext } from "../../context/store/store.context";
 import { Card } from "../../components/Card/card.component";
 import { MemberCard } from "../../components/Card/member-card/member-card.component";
@@ -121,22 +121,24 @@ export const ProjectPage = () => {
             </button>
           </div>
           {workingProject &&
-            workingProject.tasks &&
-            workingProject.tasks.map((task, index) => {
-              return (
-                <Card
-                  key={index}
-                  id={task.id}
-                  secondaryId={workingProject.id}
-                  type="task"
-                  title={task.title}
-                  line1={task.created}
-                  line2={task.dueDate}
-                  line3={task.description}
-                  cardClick={() => handleCardClick(index)}
-                />
-              );
-            })}
+          workingProject.tasks &&
+          workingProject.tasks.length > 0
+            ? workingProject.tasks.map((task, index) => {
+                return (
+                  <Card
+                    key={index}
+                    id={task.id}
+                    secondaryId={workingProject.id}
+                    type="task"
+                    title={task.title}
+                    line1={task.created}
+                    line2={task.dueDate}
+                    line3={task.description}
+                    cardClick={() => handleCardClick(index)}
+                  />
+                );
+              })
+            : "No tasks in this project"}
         </section>
         <section className="project-members-section">
           <div className="title-and-button">
@@ -145,18 +147,23 @@ export const ProjectPage = () => {
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
+
           {workingProject &&
-            workingProject.tasks &&
-            workingProject.tasks.map((task, index) => {
-              return (
-                <MemberCard
-                  key={index}
-                  email="john@email.com"
-                  firstName="John"
-                  lastName="Stanley"
-                  //cardClick={() => handleCardClick(index)}
-                />
-              );
+            workingProject.members &&
+            workingProject.members.map((member, index) => {
+              if (member.firstName !== undefined) {
+                return (
+                  <MemberCard
+                    key={index}
+                    email={member.email}
+                    firstName={member.firstName}
+                    lastName={member.lastName}
+                    //cardClick={() => handleCardClick(index)}
+                  />
+                );
+              } else {
+                return <div>No members in this project</div>;
+              }
             })}
         </section>
 
