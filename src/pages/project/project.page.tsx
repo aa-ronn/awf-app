@@ -51,6 +51,7 @@ export const ProjectPage = () => {
     if (!workingProject) {
       getASingleProject(params.selectedProjectID);
     }
+
     // eslint-disable-next-line
   }, []);
 
@@ -180,7 +181,7 @@ export const ProjectPage = () => {
           });
       } else {
         const { selectOption, title, description } = addTaskState;
-        await createATask(selectOption, title, description)
+        await createATask(workingProject.id, title, description)
           .then((res) => {
             console.log("added task: ", res);
             setIsModalOpen(false);
@@ -237,13 +238,11 @@ export const ProjectPage = () => {
               required
               handleChange={handleChange}
             />
-            <Select
+            {/* <Select
               handleChange={handleChange}
               label="Project"
-              list={projects?.map((project) => {
-                return { key: project.title, value: project.id };
-              })}
-            ></Select>
+              list={[{ key: workingProject?.title, value: workingProject?.id }]}
+            ></Select> */}
           </Form>
         </Modal>
       )}
