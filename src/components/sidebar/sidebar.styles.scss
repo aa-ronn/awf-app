@@ -46,6 +46,28 @@
   height: 100vh;
   z-index: 9998;
 
+  .sidebar-title {
+    cursor: pointer;
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 0px;
+      height: 2px;
+      top: 45px;
+      left: 60px;
+      background-color: $backgroud-faint-color;
+      transition: width 0.2s ease;
+    }
+
+    &:hover {
+      &:after {
+        width: 65px;
+        transition: width 0.2s ease;
+      }
+    }
+  }
+
   @media (max-width: $tablet) {
     position: absolute;
     top: 0px;

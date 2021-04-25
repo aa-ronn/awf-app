@@ -1,4 +1,5 @@
 import { FC, Fragment, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { LinkBlock } from "./link-block/link-block.component";
 import "./sidebar.styles.scss";
@@ -11,6 +12,7 @@ interface ISidebar {
 export const Sidebar: FC<ISidebar> = ({ title }) => {
   const { width } = useWindowDimensions();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (width <= 768) {
@@ -20,7 +22,9 @@ export const Sidebar: FC<ISidebar> = ({ title }) => {
 
   const SidebarContent = () => (
     <Fragment>
-      <h2>{!title ? "🐵 Tasks" : title}</h2>
+      <h2 className="sidebar-title" onClick={() => history.push("/")}>
+        {!title ? "🐵 Tasks" : title}
+      </h2>
       <UserDetailsBlock />
       <div className="link-blocks">
         <LinkBlock text="📓  Projects" urlPath="/" />

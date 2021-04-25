@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+
 import { StoreContext } from "../../context/store/store.context";
 import { Card } from "../../components/Card/card.component";
 import { MemberCard } from "../../components/Card/member-card/member-card.component";
@@ -209,7 +210,8 @@ export const ProjectPage = () => {
             </button>
           </div>
           {workingProject &&
-            workingProject.tasks &&
+          workingProject.tasks &&
+          workingProject.tasks.length > 0 ? (
             workingProject.tasks.map((task, index) => {
               return (
                 <Card
@@ -224,7 +226,10 @@ export const ProjectPage = () => {
                   cardClick={() => handleDeleteTaskCardClick(index)}
                 />
               );
-            })}
+            })
+          ) : (
+            <p>No tasks in this project</p>
+          )}
         </section>
         <section className="project-members-section">
           <div className="title-and-button">
@@ -233,19 +238,22 @@ export const ProjectPage = () => {
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
-          {workingProject &&
-            workingProject.members &&
-            workingProject.members.map((mem, index) => {
+
+          {workingProject && workingProject.members ? (
+            workingProject.members.map((member, index) => {
               return (
                 <MemberCard
                   key={index}
-                  email={mem.email}
-                  firstName={mem.firstName}
-                  lastName={mem.lastName}
+                  email={member.email}
+                  firstName={member.firstName}
+                  lastName={member.lastName}
                   cardClick={() => handleDeleteMemberCardClick(index)}
                 />
               );
-            })}
+            })
+          ) : (
+            <p>No members in this project</p>
+          )}
         </section>
 
         <Fab icon={faPlus} text="Task" onClick={() => handleFabClick()} />

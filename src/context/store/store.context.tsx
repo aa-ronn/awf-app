@@ -99,7 +99,6 @@ const StoreProvider: FC = ({ children }) => {
             resolve("Projects Received");
           })
           .catch((err) => {
-            console.log(err);
             reject(err);
           });
       }),
@@ -142,7 +141,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Project Details Received");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -206,7 +204,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Projects Created");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -233,7 +230,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Deleted Project");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -303,7 +299,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Updated Project");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -340,7 +335,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Added To Project");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -377,7 +371,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Deleted From Project");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -479,7 +472,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Task Created");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -542,7 +534,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Task Updated");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -574,7 +565,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Task Deleted");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -612,7 +602,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Added To Project Task");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
@@ -650,7 +639,6 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Deleted From Project Task");
         })
         .catch((err) => {
-          console.log(err);
           reject(err);
         });
     });
