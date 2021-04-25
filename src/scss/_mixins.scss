@@ -20,6 +20,7 @@
   cursor: pointer;
   box-shadow: $box-shadow;
   border: 1px solid $secondary-color;
+  z-index: 9999;
 
   &:hover {
     border: 1px solid $primary-highlight-color;
@@ -29,6 +30,7 @@
 
     &.delete {
       border: 1px solid $delete-color;
+      background-color: $delete-color;
     }
   }
 }

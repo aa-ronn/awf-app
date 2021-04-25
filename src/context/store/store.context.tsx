@@ -282,10 +282,16 @@ const StoreProvider: FC = ({ children }) => {
             res.data.project.tasks,
             res.data.project.created
           );
+          // if (res.data.prjoect.title && res.data.prjoect.description) {
+          //   const newTitle: string = res.data.project.title
+          // const newDescription: string = res.data.project.title
+          // const updatedWorkingProject = {...workingProject, title: newTitle, description: newDescription}
+          // setWorkingProject(updatedWorkingProject);
+          // }
           setWorkingProject(receivedProject);
         })
         .then(async () => {
-          await getAllProjects();
+          await getASingleProject(id);
         })
         .then(() => {
           resolve("Updated Project");
@@ -534,6 +540,7 @@ const StoreProvider: FC = ({ children }) => {
    */
   const deleteATask = (taskId: string, projectId: string): Promise<string> =>
     new Promise((resolve, reject) => {
+      console.log("deleting task...");
       axios({
         method: "delete",
         url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}`,
