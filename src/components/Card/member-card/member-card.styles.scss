@@ -1,0 +1,17 @@
+@use "../../../scss/consts" as *;
+
+.member-card-component-wrapper {
+  border-radius: 15px;
+  border: 2px solid $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .member-card-info {
+    padding: 2rem 0;
+    .member-name {
+      color: $secondary-color;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+}
