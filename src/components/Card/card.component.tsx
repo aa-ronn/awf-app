@@ -52,41 +52,42 @@ export const Card: FC<ICard> = ({
           {type === "project" && line2}
           {type === "task" && line3 && line3}
         </p>
-
-        {workingProject?.tasks !== null &&
-        workingProject?.tasks[0].assignedTo ? (
-          <Tooltip
-            text={
-              workingProject?.tasks &&
-              workingProject?.tasks.map((task) => {
-                return task.assignedTo + "\n";
-              })
-            }
-          >
+        {type === "task" ? (
+          workingProject?.tasks !== null &&
+          workingProject?.tasks[0].assignedTo ? (
+            <Tooltip
+              text={
+                workingProject?.tasks &&
+                workingProject?.tasks.map((task) => {
+                  return task.assignedTo + "\n";
+                })
+              }
+            >
+              <div className="assigned-members">
+                {workingProject?.tasks !== null &&
+                  workingProject?.tasks[0].assignedTo &&
+                  "Members Assigned: " +
+                    workingProject?.tasks[0].assignedTo.length}
+              </div>
+              <div className="assigned-members">
+                <Tooltip text="Assign a member to task">
+                  <button>
+                    <FontAwesomeIcon icon={faPlus} />
+                  </button>
+                </Tooltip>
+              </div>
+            </Tooltip>
+          ) : (
             <div className="assigned-members">
-              {workingProject?.tasks !== null &&
-                workingProject?.tasks[0].assignedTo &&
-                "Members Assigned: " +
-                  workingProject?.tasks[0].assignedTo.length}
-            </div>
-            <div className="assigned-members">
-              <Tooltip text="Assign a member to task">
+              <p>No Members Assigned</p>
+              <Tooltip text="Assign a member">
                 <button>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               </Tooltip>
             </div>
-          </Tooltip>
-        ) : (
-          <div className="assigned-members">
-            <p>No Members Assigned</p>
-            <Tooltip text="Assign a member to task">
-              <button>
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-            </Tooltip>
-          </div>
-        )}
+          )
+        ) : null}
       </div>
 
       <div className="card-button-wrapper">
