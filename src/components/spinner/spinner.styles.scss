@@ -1,6 +1,13 @@
 .spinner {
+  display: none;
+  width: inherit;
+  height: inherit;
   font-size: inherit;
-  animation: spin 3s linear infinite;
+
+  &.spin {
+    display: block;
+    animation: spin 2s linear infinite;
+  }
 }
 
 @keyframes spin {
