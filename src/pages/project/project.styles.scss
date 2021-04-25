@@ -47,12 +47,16 @@
     }
 
     .project-tasks-section {
+      @include scrollable;
+      .member-card {
+        margin: $size-md;
+      }
     }
 
     .project-members-section {
       @include scrollable;
       .member-card {
-        margin: 1rem 1rem;
+        margin: $size-md;
       }
     }
 
