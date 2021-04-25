@@ -32,17 +32,22 @@
     :nth-child(1) {
       font-weight: bold;
     }
-    &.task {
+
+    .card-texts-wrapper {
       display: flex;
-      align-items: center;
-      :nth-child(1) {
-        font-weight: bold;
+      flex-direction: column;
+
+      .description {
+        display: flex;
+        margin: 0;
       }
-      :nth-child(2) {
-        margin: 0 1rem;
+
+      .extra-description {
+        display: flex;
       }
     }
   }
+
   .card-button-wrapper {
     display: flex;
     flex-direction: row;

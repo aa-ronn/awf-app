@@ -9,6 +9,7 @@ interface ICard {
   title: string;
   line1: string | null;
   line2: string;
+  line3?: string;
   cardClick: MouseEventHandler<HTMLDivElement> | undefined;
 }
 
@@ -19,6 +20,7 @@ export const Card: FC<ICard> = ({
   title,
   line1,
   line2,
+  line3,
   cardClick,
 }) => {
   const { deleteAProject, updateATask, deleteATask } = useContext(StoreContext);
@@ -34,10 +36,13 @@ export const Card: FC<ICard> = ({
             ? "Start: " + line1?.substring(0, 10)
             : "Started: " + line1?.substring(0, 10)}
         </div>
-        <p className="description">
+        <div className="date">
           {type === "task" && line2 !== undefined && "End: " + line2}
           {type === "task" && line2 === undefined && "End: ♾️"}
+        </div>
+        <p className="description">
           {type === "project" && line2}
+          {type === "task" && line3 && line3}
         </p>
       </div>
       <div className="card-button-wrapper">

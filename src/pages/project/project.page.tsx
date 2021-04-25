@@ -132,6 +132,7 @@ export const ProjectPage = () => {
                   title={task.title}
                   line1={task.created}
                   line2={task.dueDate}
+                  line3={task.description}
                   cardClick={() => handleCardClick(index)}
                 />
               );
@@ -148,17 +149,13 @@ export const ProjectPage = () => {
             workingProject.tasks &&
             workingProject.tasks.map((task, index) => {
               return (
-                <div>
-                  <div className="member-card">
-                    <MemberCard
-                      key={index}
-                      email="john@email.com"
-                      firstName="John"
-                      lastName="Stanley"
-                      //cardClick={() => handleCardClick(index)}
-                    />
-                  </div>
-                </div>
+                <MemberCard
+                  key={index}
+                  email="john@email.com"
+                  firstName="John"
+                  lastName="Stanley"
+                  //cardClick={() => handleCardClick(index)}
+                />
               );
             })}
         </section>

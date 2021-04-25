@@ -293,6 +293,9 @@ const StoreProvider: FC = ({ children }) => {
         .then(async () => {
           await getASingleProject(id);
         })
+        .then(async () => {
+          await getAllProjects();
+        })
         .then(() => {
           resolve("Updated Project");
         })
