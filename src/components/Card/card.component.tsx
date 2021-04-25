@@ -23,15 +23,15 @@ export const Card: FC<ICard> = ({
   return (
     <div className="card-component-wrapper" onClick={cardClick}>
       <div className={`card-info ${type === "project" ? "" : "task"}`}>
-        <div className="title">{title}</div>
+        <h3 className="title">{title}</h3>
         <div className="date">
           {type === "task"
             ? "Start: " + line1?.substring(0, 10)
             : "Started: " + line1?.substring(0, 10)}
         </div>
-        <div className="description">
-          {type === "task" ? "End: " + line2 : "Description: " + line2}
-        </div>
+        <p className="description">
+          {type === "task" ? "End: " + line2 : line2}
+        </p>
       </div>
 
       <div className="card-button-wrapper">

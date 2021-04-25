@@ -17,6 +17,10 @@
     width: 87%;
   }
 
+  h3 {
+    margin: 0;
+  }
+
   &:hover {
     cursor: pointer;
     border: 3px solid $primary-highlight-color;
@@ -44,6 +48,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    margin-left: $size-md;
     :nth-child(2) {
       margin-left: $size-md;
       &:hover {
@@ -53,6 +58,7 @@
 
     @media (max-width: $desktop) {
       flex-direction: column;
+      align-items: flex-end;
       justify-content: center;
       :nth-child(2) {
         margin-left: 0;

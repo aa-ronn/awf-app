@@ -1,3 +1,4 @@
+@use "../../scss/consts" as *;
 /* 
     File: Modal.css
     Description: Contains the styling for the Modal component
@@ -19,23 +20,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 500px;
+  max-width: fit-content;
   max-height: 80%;
   margin: 15vh auto;
   box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
   border: 1px solid #fff;
   border-radius: 15px;
+  padding: 0 $size-md $size-md $size-md;
+
   //   padding-bottom: 70px;
   .modal-head {
     display: flex;
     justify-content: flex-end;
     width: 85%;
+    p {
+      margin-top: $size-md;
+      margin-bottom: 0;
+    }
   }
   p {
     font-weight: bold;
     &:hover {
       cursor: pointer;
-      color: #3a12c9;
+      color: $primary-color;
     }
+  }
+
+  button {
+    margin-top: $size-md;
   }
 }

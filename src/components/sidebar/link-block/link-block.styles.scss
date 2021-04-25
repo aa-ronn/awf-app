@@ -23,6 +23,8 @@
       margin-right: $size-md;
       transition: width 0.2s ease;
       background-color: $backgroud-faint-color;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
     }
   }
 
