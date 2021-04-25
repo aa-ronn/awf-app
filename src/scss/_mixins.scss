@@ -20,7 +20,6 @@
   cursor: pointer;
   box-shadow: $box-shadow;
   border: 1px solid $secondary-color;
-  z-index: 9999;
 
   &:hover {
     border: 1px solid $primary-highlight-color;

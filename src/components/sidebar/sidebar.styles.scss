@@ -44,6 +44,7 @@
   padding-left: $size-md;
   padding-right: $size-sm;
   height: 100vh;
+  z-index: 9998;
 
   @media (max-width: $tablet) {
     position: absolute;
