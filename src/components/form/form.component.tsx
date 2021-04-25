@@ -26,7 +26,7 @@ export const Form: FC<IForm> = ({
       <h1>
         {title} {emoji}
       </h1>
-      <div className="project-name-task-modal">{"To: " + projectName} </div>
+      <div className="task-modal-project-name">{"Project: " + projectName}</div>
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className="children">{children}</div>
         <div className="submit-button">
