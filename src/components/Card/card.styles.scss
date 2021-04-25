@@ -32,7 +32,10 @@
     :nth-child(1) {
       font-weight: bold;
     }
-
+    .assigned-members {
+      display: flex;
+      align-items: center;
+    }
     .card-texts-wrapper {
       display: flex;
       flex-direction: column;

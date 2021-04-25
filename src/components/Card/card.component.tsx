@@ -1,6 +1,9 @@
 import { FC, Fragment, MouseEventHandler, useContext } from "react";
+import { Tooltip } from "../tooltip/tooltip.component";
 import { StoreContext } from "../../context/store/store.context";
 import "./card.styles.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface ICard {
   type?: string;
@@ -23,7 +26,12 @@ export const Card: FC<ICard> = ({
   line3,
   cardClick,
 }) => {
-  const { deleteAProject, updateATask, deleteATask } = useContext(StoreContext);
+  const {
+    workingProject,
+    deleteAProject,
+    updateATask,
+    deleteATask,
+  } = useContext(StoreContext);
   return (
     <div className="card-component-wrapper">
       <div
@@ -44,7 +52,39 @@ export const Card: FC<ICard> = ({
           {type === "project" && line2}
           {type === "task" && line3 && line3}
         </p>
+
+        {workingProject?.tasks !== null &&
+        workingProject?.tasks[0].assignedTo ? (
+          <Tooltip
+            text={
+              workingProject?.tasks &&
+              workingProject?.tasks.map((task) => {
+                return task.assignedTo + "\n";
+              })
+            }
+          >
+            <div className="assigned-members">
+              {workingProject?.tasks !== null &&
+                workingProject?.tasks[0].assignedTo &&
+                "Members Assigned: " +
+                  workingProject?.tasks[0].assignedTo.length}
+            </div>
+            <div className="assigned-members">
+              <Tooltip text="Assign Memeber to task">
+                <FontAwesomeIcon icon={faPlus} />
+              </Tooltip>
+            </div>
+          </Tooltip>
+        ) : (
+          <div className="assigned-members">
+            {"No Members Assigned "}
+            <Tooltip text="Assign a member">
+              <FontAwesomeIcon icon={faPlus} />
+            </Tooltip>
+          </div>
+        )}
       </div>
+
       <div className="card-button-wrapper">
         {type === "task" && (
           <Fragment>
