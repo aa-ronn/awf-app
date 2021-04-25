@@ -1,20 +1,33 @@
 import { Fab } from "../../components/fab/fab.component";
 import "./project.styles.scss";
 import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { MutableRefObject, useContext, useEffect, useRef } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { StoreContext } from "../../context/store/store.context";
 import { Card } from "../../components/Card/card.component";
 import { MemberCard } from "../../components/Card/member-card/member-card.component";
 import { useParams } from "react-router-dom";
 import { Tooltip } from "../../components/tooltip/tooltip.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Modal } from "../../components/Modal/Modal.component";
+import { Form } from "../../components/form/form.component";
+import { Input } from "../../components/input/input.component";
 
 export const ProjectPage = () => {
   const {
     workingProject,
     createATask,
+    deleteATask,
     getASingleProject,
     updateAProject,
+    addMemberToAProject,
+    deleteMemberFromAProject,
   } = useContext(StoreContext);
   const params = useParams<{ selectedProjectID: string }>();
 
@@ -25,11 +38,27 @@ export const ProjectPage = () => {
     // eslint-disable-next-line
   }, []);
 
-  const handleCardClick = async (taskIndex: number) => {
+  const handleDeleteTaskCardClick = async (taskIndex: number) => {
     // await getASingleProject(projectID);
     workingProject &&
       workingProject.tasks &&
-      console.log(workingProject.tasks[taskIndex]);
+      (await deleteATask(
+        workingProject.tasks[taskIndex].id,
+        workingProject.id
+      ).catch((err) => {
+        console.log(err);
+      }));
+  };
+
+  const handleDeleteMemberCardClick = async (memberIndex: number) => {
+    workingProject &&
+      workingProject.members &&
+      (await deleteMemberFromAProject(
+        workingProject.id,
+        workingProject.members[memberIndex].email
+      ).catch((err) => {
+        console.log(err);
+      }));
   };
 
   const handleFabClick = async () => {
@@ -51,7 +80,11 @@ export const ProjectPage = () => {
     const finishEditTitle = () => {
       if (workingProject) {
         if (titleRef && titleRef.current) {
-          updateAProject(workingProject.id, titleRef.current.innerText);
+          updateAProject(
+            workingProject.id,
+            titleRef.current.innerText,
+            undefined
+          );
         }
       }
     };
@@ -63,7 +96,11 @@ export const ProjectPage = () => {
     const finishEditDescription = () => {
       if (workingProject) {
         if (descriptionRef && descriptionRef.current) {
-          updateAProject(workingProject.id, descriptionRef.current.innerText);
+          updateAProject(
+            workingProject.id,
+            undefined,
+            descriptionRef.current.innerText
+          );
         }
       }
     };
@@ -85,8 +122,59 @@ export const ProjectPage = () => {
     };
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [addMemberState, setAddMemberState] = useState("");
+
+  const handleChange = (
+    event:
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLSelectElement>
+      | ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { value, name } = event.target;
+    console.log(name);
+    console.log(value);
+    if (name === "email") {
+      setAddMemberState(value);
+    }
+  };
+
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (workingProject) {
+      await addMemberToAProject(workingProject.id, addMemberState)
+        .then((res) => {
+          console.log("added member: ", res);
+          setIsModalOpen(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <div className="project-page">
+      {isModalOpen && (
+        <Modal setModalOpen={setIsModalOpen}>
+          <Form
+            title="Add a Member"
+            emoji="🦧"
+            buttonLabel="Add Member"
+            handleSubmit={handleFormSubmit}
+          >
+            <Input
+              name="email"
+              label="Email"
+              type="email"
+              placeholder="Enter email"
+              required
+              handleChange={handleChange}
+            />
+          </Form>
+        </Modal>
+      )}
       <div className="title-details">
         <Tooltip text="Click to edit">
           <h1
@@ -133,7 +221,7 @@ export const ProjectPage = () => {
                   line1={task.created}
                   line2={task.dueDate}
                   line3={task.description}
-                  cardClick={() => handleCardClick(index)}
+                  cardClick={() => handleDeleteTaskCardClick(index)}
                 />
               );
             })}
@@ -141,20 +229,20 @@ export const ProjectPage = () => {
         <section className="project-members-section">
           <div className="title-and-button">
             <h2>Project Members</h2>
-            <button>
+            <button onClick={() => setIsModalOpen(true)}>
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
           {workingProject &&
-            workingProject.tasks &&
-            workingProject.tasks.map((task, index) => {
+            workingProject.members &&
+            workingProject.members.map((mem, index) => {
               return (
                 <MemberCard
                   key={index}
-                  email="john@email.com"
-                  firstName="John"
-                  lastName="Stanley"
-                  //cardClick={() => handleCardClick(index)}
+                  email={mem.email}
+                  firstName={mem.firstName}
+                  lastName={mem.lastName}
+                  cardClick={() => handleDeleteMemberCardClick(index)}
                 />
               );
             })}

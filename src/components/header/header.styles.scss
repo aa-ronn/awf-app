@@ -24,8 +24,10 @@
     }
 
     button {
+      > * {
+        pointer-events: all;
+      }
       margin-left: $size-md;
-      pointer-events: all;
       div {
         &:hover {
           &:after {

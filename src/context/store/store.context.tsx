@@ -124,13 +124,16 @@ const StoreProvider: FC = ({ children }) => {
         .then((res: any) => {
           console.log(res.data);
 
+          const memberList: User[] = [...res.data.project.members];
+          const taskList: Task[] = [...res.data.project.tasks];
+
           setWorkingProject(
             new Project(
               res.data.project.id,
               res.data.project.title,
               res.data.project.description,
-              [...res.data.project.members],
-              [...res.data.project.tasks],
+              memberList,
+              taskList,
               res.data.project.created
             )
           );
