@@ -456,8 +456,9 @@ const StoreProvider: FC = ({ children }) => {
         },
         data,
       })
-        .then((res: any) => {
+        .then(async (res: any) => {
           console.log(res.data);
+          await getAllTasksAssignedToAUser()
         })
         .then(async () => {
           await getASingleProject(projectId);
