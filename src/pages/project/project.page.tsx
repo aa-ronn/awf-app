@@ -42,7 +42,6 @@ export const ProjectPage = () => {
   // }
 
   const [addTaskState, setAddTaskState] = useState<{
-    selectOption: string;
     title: string;
     description: string;
   }>(initialTaskState);
@@ -180,7 +179,7 @@ export const ProjectPage = () => {
             console.log(err);
           });
       } else {
-        const { selectOption, title, description } = addTaskState;
+        const { title, description } = addTaskState;
         await createATask(workingProject.id, title, description)
           .then((res) => {
             console.log("added task: ", res);
@@ -218,6 +217,7 @@ export const ProjectPage = () => {
         <Modal setModalOpen={setIsModalOpen}>
           <Form
             title="Add a Task"
+            projectName={workingProject?.title}
             emoji="📖"
             buttonLabel="Add Task"
             handleSubmit={handleFormSubmit}
