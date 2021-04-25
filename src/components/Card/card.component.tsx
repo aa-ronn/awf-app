@@ -33,7 +33,11 @@ export const Card: FC<ICard> = ({
     deleteATask,
   } = useContext(StoreContext);
   return (
-    <div className="card-component-wrapper">
+    <div
+      className={`card-component-wrapper ${
+        type === "project" ? "project" : "task"
+      }`}
+    >
       <div
         className={`card-info ${type === "project" ? "" : "task"}`}
         onClick={type === "project" ? cardClick : () => void ""}

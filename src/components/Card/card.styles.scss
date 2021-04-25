@@ -13,18 +13,19 @@
   background-color: $tertiary-color;
   box-shadow: $box-shadow;
 
+  &.project {
+    &:hover {
+      cursor: pointer;
+      border: 3px solid $primary-highlight-color;
+      background-color: $backgroud-color;
+    }
+  }
   @media (max-width: $tablet) {
     width: 87%;
   }
 
   h3 {
     margin: 0;
-  }
-
-  &:hover {
-    cursor: pointer;
-    border: 3px solid $primary-highlight-color;
-    background-color: $backgroud-color;
   }
 
   .card-info {
