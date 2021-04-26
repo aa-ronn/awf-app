@@ -585,6 +585,7 @@ const StoreProvider: FC = ({ children }) => {
       if (!projectId || !memberEmail) {
         reject("A task ID, project ID and an email must be provided");
       }
+
       axios({
         method: "post",
         url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}/assigned`,

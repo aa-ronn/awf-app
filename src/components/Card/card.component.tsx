@@ -44,8 +44,6 @@ export const Card: FC<ICard> = ({
     deleteATask,
   } = useContext(StoreContext);
 
-  const tooltipText = () => {};
-
   return (
     <div
       className={`card-component-wrapper ${
