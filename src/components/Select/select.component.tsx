@@ -21,8 +21,8 @@ export const Select: FC<ISelect> = ({ handleChange, label, list }) => {
           <p>{label}</p>
           <select name="selectOption" onChange={handleChange}>
             {list &&
-              list.map((item) => {
-                return <option value={item.value}>{item.key}</option>;
+              list.map((item, index) => {
+                return <option key={index} value={item.value}>{item.key}</option>;
               })}
           </select>
         </label>

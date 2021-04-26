@@ -14,6 +14,7 @@ interface ICard {
   line2: string;
   line3?: string;
   cardClick?: MouseEventHandler<HTMLDivElement> | undefined;
+  addMembersClick?: (type: string, id?: string) => void | undefined;
 }
 
 export const Card: FC<ICard> = ({
@@ -25,6 +26,7 @@ export const Card: FC<ICard> = ({
   line2,
   line3,
   cardClick,
+  addMembersClick,
 }) => {
   const {
     workingProject,
@@ -68,27 +70,30 @@ export const Card: FC<ICard> = ({
               }
             >
               <div className="assigned-members">
-                {workingProject?.tasks !== null &&
-                  workingProject?.tasks[0].assignedTo &&
+                {workingProject?.tasks[0].assignedTo &&
                   "Members Assigned: " +
                     workingProject?.tasks[0].assignedTo.length}
               </div>
               <div className="assigned-members">
+                { addMembersClick &&
                 <Tooltip text="Assign a member to task">
-                  <button>
+                  <button onClick={() => addMembersClick("member", id)}>
                     <FontAwesomeIcon icon={faPlus} />
                   </button>
                 </Tooltip>
+                }
               </div>
             </Tooltip>
           ) : (
             <div className="assigned-members">
               <p>No Members Assigned</p>
+              { addMembersClick &&
               <Tooltip text="Assign a member">
-                <button>
+                <button onClick={() => addMembersClick("member", id)}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               </Tooltip>
+              }
             </div>
           )
         ) : null}

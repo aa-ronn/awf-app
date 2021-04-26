@@ -31,8 +31,10 @@ export const ProjectPage = () => {
     updateAProject,
     addMemberToAProject,
     deleteMemberFromAProject,
+    addMemberToAProjectTask,
   } = useContext(StoreContext);
   const params = useParams<{ selectedProjectID: string }>();
+  const [workingTaskId, setWorkingTaskId] = useState("");
 
   const initialTaskState = { selectOption: "", title: "", description: "" };
 
@@ -77,7 +79,7 @@ export const ProjectPage = () => {
       }));
   };
 
-  const handleFabClick = async (type: string) => {
+  const handleFabClick = (type: string, id?: string) => {
     // workingProject &&
     //   workingProject.tasks &&
     //   (await createATask(
@@ -85,7 +87,9 @@ export const ProjectPage = () => {
     //     "Task Name " + workingProject.tasks.length,
     //     "Task Description " + workingProject.tasks.length
     //   ));
-
+    if (type === "member" && id) {
+      setWorkingTaskId(id);
+    }
     setModalType(type);
     setIsModalOpen(true);
   };
@@ -154,7 +158,7 @@ export const ProjectPage = () => {
     const { value, name } = event.target;
     console.log(name);
     console.log(value);
-    if (modalType === "member") {
+    if (modalType === "member" || modalType === "memberToProject") {
       if (name === "email") {
         setAddMemberState(value);
       }
@@ -169,6 +173,16 @@ export const ProjectPage = () => {
 
     if (workingProject) {
       if (modalType === "member") {
+        await addMemberToAProjectTask(workingTaskId, workingProject.id, addMemberState)
+            .then((res) => {
+              console.log("added member to project task: ", res);
+              setIsModalOpen(false);
+              setModalType("");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+      } else if (modalType === "memberToProject") {
         await addMemberToAProject(workingProject.id, addMemberState)
           .then((res) => {
             console.log("added member: ", res);
@@ -194,10 +208,11 @@ export const ProjectPage = () => {
 
   return (
     <div className="project-page">
-      {isModalOpen && modalType === "member" && (
+      {isModalOpen && (modalType === "member" || modalType === "memberToProject") && (
         <Modal setModalOpen={setIsModalOpen}>
           <Form
             title="Add a Member"
+            projectName={workingProject?.title}
             emoji="🦧"
             buttonLabel="Add Member"
             handleSubmit={handleFormSubmit}
@@ -294,6 +309,7 @@ export const ProjectPage = () => {
                   line2={task.dueDate}
                   line3={task.description}
                   cardClick={() => handleDeleteTaskCardClick(index)}
+                  addMembersClick={handleFabClick}
                 />
               );
             })
@@ -305,7 +321,7 @@ export const ProjectPage = () => {
           <div className="title-and-button">
             <h2>Project Members</h2>
 
-            <button onClick={() => handleFabClick("member")}>
+            <button onClick={() => handleFabClick("memberToProject")}>
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>

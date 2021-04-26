@@ -574,7 +574,7 @@ const StoreProvider: FC = ({ children }) => {
    * @public
    * @param projectId ID of selected project
    * @param memberEmail The email of the invited member.
-   * @returns Promise of success or failuer
+   * @returns Promise of success or failure
    */
   const addMemberToAProjectTask = (
     taskId: string,
@@ -587,7 +587,7 @@ const StoreProvider: FC = ({ children }) => {
       }
       axios({
         method: "post",
-        url: `http://localhost:5000/projects/${projectId}/members/${taskId}/assigned`,
+        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}/assigned`,
         headers: {
           authorization: token,
         },
