@@ -649,10 +649,17 @@ const StoreProvider: FC = ({ children }) => {
   //**----------------**//
 
   useEffect(() => {
-    getAllProjects();
-    getAllTasksAssignedToAUser();
+    if (token) {
+      getAllProjects();
+      getAllTasksAssignedToAUser();
+    }
   }, [getAllProjects, getAllTasksAssignedToAUser]);
 
+  useEffect(() => {
+    if (token) {
+      getAllTasksAssignedToAUser();
+    }
+  }, [workingProject, getAllTasksAssignedToAUser]);
   return (
     <StoreContext.Provider
       value={{
