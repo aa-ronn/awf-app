@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useState} from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Fab } from "../../components/fab/fab.component";
 import "./projects.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -44,44 +44,44 @@ export const ProjectsPage = () => {
 
     await createAProject(title, description)
       .then((res) => {
-        console.log('added project: ', res);
-        setIsModalOpen(false)
+        console.log("added project: ", res);
+        setIsModalOpen(false);
       })
       .catch(() => {
-        console.log('error adding project');
+        console.log("error adding project");
       });
   };
 
   return (
     <div className="projects-page">
       <h1>Your Projects</h1>
-      {isModalOpen &&
-      <Modal setModalOpen={setIsModalOpen}>
-        <Form
+      {isModalOpen && (
+        <Modal setModalOpen={setIsModalOpen}>
+          <Form
             title="Add a Project"
             emoji="📓"
             buttonLabel="Add Project"
             handleSubmit={handleFormSubmit}
-        >
-          <Input
+          >
+            <Input
               name="title"
               label="Title"
               type="text"
               placeholder="Enter title"
               required
               handleChange={handleChange}
-          />
-          <Input
+            />
+            <Input
               name="description"
               label="Description"
               type="text"
               placeholder="Enter description"
               required
               handleChange={handleChange}
-          />
-        </Form>
-      </Modal>
-      }
+            />
+          </Form>
+        </Modal>
+      )}
       <div className="content">
         {projects &&
           projects.map((project, index) => {
@@ -100,9 +100,7 @@ export const ProjectsPage = () => {
         <Fab
           icon={faPlus}
           text="Project"
-          onClick={() =>
-              setIsModalOpen(true)
-          }
+          onClick={() => setIsModalOpen(true)}
         />
       </div>
     </div>

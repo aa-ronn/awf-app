@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import "./tooltip.styles.scss";
 
-export const Tooltip: FC<{ text: string | null | undefined | string[] }> = ({
+export const Tooltip: FC<{ text: string | null | undefined | string[][] }> = ({
   children,
   text,
 }) => {

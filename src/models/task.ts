@@ -6,7 +6,7 @@ export class Task {
   title: string;
   description: string;
   dueDate: string;
-  assignedTo: User[] | null | undefined;
+  assigned_to: User[] | null | undefined;
   created: string | null;
 
   constructor(
@@ -15,7 +15,7 @@ export class Task {
     title: string,
     description: string,
     dueDate: string,
-    assignedTo: User[] | null | undefined,
+    assigned_to: User[] | null | undefined,
     created: string | null
   ) {
     this.id = id;
@@ -24,6 +24,6 @@ export class Task {
     this.description = description;
     this.created = created;
     this.dueDate = dueDate;
-    this.assignedTo = assignedTo;
+    this.assigned_to = assigned_to;
   }
 }

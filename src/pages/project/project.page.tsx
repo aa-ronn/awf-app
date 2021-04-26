@@ -173,15 +173,19 @@ export const ProjectPage = () => {
 
     if (workingProject) {
       if (modalType === "member") {
-        await addMemberToAProjectTask(workingTaskId, workingProject.id, addMemberState)
-            .then((res) => {
-              console.log("added member to project task: ", res);
-              setIsModalOpen(false);
-              setModalType("");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+        await addMemberToAProjectTask(
+          workingTaskId,
+          workingProject.id,
+          addMemberState
+        )
+          .then((res) => {
+            console.log("added member to project task: ", res);
+            setIsModalOpen(false);
+            setModalType("");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else if (modalType === "memberToProject") {
         await addMemberToAProject(workingProject.id, addMemberState)
           .then((res) => {
@@ -208,26 +212,27 @@ export const ProjectPage = () => {
 
   return (
     <div className="project-page">
-      {isModalOpen && (modalType === "member" || modalType === "memberToProject") && (
-        <Modal setModalOpen={setIsModalOpen}>
-          <Form
-            title="Add a Member"
-            projectName={workingProject?.title}
-            emoji="🦧"
-            buttonLabel="Add Member"
-            handleSubmit={handleFormSubmit}
-          >
-            <Input
-              name="email"
-              label="Email"
-              type="email"
-              placeholder="Enter email"
-              required
-              handleChange={handleChange}
-            />
-          </Form>
-        </Modal>
-      )}
+      {isModalOpen &&
+        (modalType === "member" || modalType === "memberToProject") && (
+          <Modal setModalOpen={setIsModalOpen}>
+            <Form
+              title="Add a Member"
+              projectName={workingProject?.title}
+              emoji="🦧"
+              buttonLabel="Add Member"
+              handleSubmit={handleFormSubmit}
+            >
+              <Input
+                name="email"
+                label="Email"
+                type="email"
+                placeholder="Enter email"
+                required
+                handleChange={handleChange}
+              />
+            </Form>
+          </Modal>
+        )}
       {isModalOpen && modalType === "task" && (
         <Modal setModalOpen={setIsModalOpen}>
           <Form

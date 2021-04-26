@@ -33,14 +33,21 @@
     :nth-child(1) {
       font-weight: bold;
     }
-    .assigned-members {
+    .assigned-members-wrapper {
       display: flex;
       align-items: center;
 
-      p {
-        margin-right: $size-md;
+      .assigned-members {
+        button {
+          margin-left: 1rem;
+        }
+
+        p {
+          margin-right: $size-md;
+        }
       }
     }
+
     .card-texts-wrapper {
       display: flex;
       flex-direction: column;

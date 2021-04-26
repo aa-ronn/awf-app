@@ -407,7 +407,7 @@ const StoreProvider: FC = ({ children }) => {
               task.title,
               task.description,
               task.due_date,
-              task.assignedTo,
+              task.assigned_To,
               task.created
             )
           );

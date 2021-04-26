@@ -1,9 +1,18 @@
-import { FC, Fragment, MouseEventHandler, useContext } from "react";
+import {
+  FC,
+  Fragment,
+  MouseEventHandler,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Tooltip } from "../tooltip/tooltip.component";
 import { StoreContext } from "../../context/store/store.context";
 import "./card.styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Project } from "../../models/project";
+import { Task } from "../../models/task";
 
 interface ICard {
   type?: string;
@@ -34,6 +43,9 @@ export const Card: FC<ICard> = ({
     updateATask,
     deleteATask,
   } = useContext(StoreContext);
+
+  const tooltipText = () => {};
+
   return (
     <div
       className={`card-component-wrapper ${
@@ -58,45 +70,54 @@ export const Card: FC<ICard> = ({
           {type === "project" && line2}
           {type === "task" && line3 && line3}
         </p>
-        {type === "task" ? (
-          workingProject?.tasks !== null &&
-          workingProject?.tasks[0].assignedTo ? (
+
+        {type === "task" && workingProject?.tasks && (
+          <div className="assigned-members-wrapper">
             <Tooltip
               text={
-                workingProject?.tasks &&
-                workingProject?.tasks.map((task) => {
-                  return task.assignedTo + "\n";
-                })
+                workingProject.tasks &&
+                workingProject.tasks
+                  .filter((taskId) => taskId.id === id)
+                  .map((task) => {
+                    let text: string[] = [];
+                    if (task.assigned_to && task.assigned_to.length > 0) {
+                      task.assigned_to?.map((member) => {
+                        text.push(
+                          member.firstName + " " + member.lastName + "\n"
+                        );
+                      });
+                    } else {
+                      text.push("No members assigned");
+                    }
+                    return text;
+                  })
               }
             >
               <div className="assigned-members">
-                {workingProject?.tasks[0].assignedTo &&
-                  "Members Assigned: " +
-                    workingProject?.tasks[0].assignedTo.length}
+                {workingProject.tasks &&
+                  workingProject.tasks
+                    .filter((taskId) => taskId.id === id)
+                    .map((task) => {
+                      if (task.assigned_to && task.assigned_to.length > 0) {
+                        return "Members assigned " + task.assigned_to.length;
+                      } else {
+                        return "No members assinged";
+                      }
+                    })}
               </div>
-              <div className="assigned-members">
-                { addMembersClick &&
+            </Tooltip>
+
+            <div className="assigned-members">
+              {addMembersClick && (
                 <Tooltip text="Assign a member to task">
                   <button onClick={() => addMembersClick("member", id)}>
                     <FontAwesomeIcon icon={faPlus} />
                   </button>
                 </Tooltip>
-                }
-              </div>
-            </Tooltip>
-          ) : (
-            <div className="assigned-members">
-              <p>No Members Assigned</p>
-              { addMembersClick &&
-              <Tooltip text="Assign a member">
-                <button onClick={() => addMembersClick("member", id)}>
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-              </Tooltip>
-              }
+              )}
             </div>
-          )
-        ) : null}
+          </div>
+        )}
       </div>
 
       <div className="card-button-wrapper">
