@@ -1,8 +1,10 @@
 import axios from "axios";
-import { FC, createContext, useState } from "react";
+import { FC, createContext, useState, useContext } from "react";
+
 import { AuthContextType } from "../../types/auth-context";
 import { User } from "../../models/user";
 import { host } from "../../utils/env";
+import { ToastContext } from "../toast/toast.context";
 
 const AuthContext = createContext<AuthContextType>({
   token: null,
@@ -15,6 +17,7 @@ const AuthContext = createContext<AuthContextType>({
 const AuthProvider: FC = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const { notify } = useContext(ToastContext);
 
   /**
    * Signs up new a user..
@@ -44,11 +47,13 @@ const AuthProvider: FC = ({ children }) => {
         .then((res: any) => {
           setToken(res.data.token);
           setUser(res.data.user);
+          notify(`Hey, ${res.data.user.firstName}`);
         })
         .then(() => {
           resolve("User created");
         })
         .catch((err) => {
+          notify(err.message, "error");
           console.log(err);
           reject(err);
         });
@@ -76,11 +81,14 @@ const AuthProvider: FC = ({ children }) => {
         .then((res: any) => {
           setToken(res.data.token);
           setUser(res.data.user);
+          notify(`Hey, ${res.data.user.firstName}!`);
         })
         .then(() => {
           resolve("User Loged In");
         })
         .catch((err) => {
+          console.log(err);
+          notify(err.message, "error");
           console.log(err);
           reject(err);
         });

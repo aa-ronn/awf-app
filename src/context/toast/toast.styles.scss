@@ -1,0 +1,13 @@
+@use "../../scss//consts" as *;
+
+.Toastify {
+  button {
+    box-shadow: none;
+  }
+}
+.Toastify__toast {
+  color: $font-color-primary;
+}
+.Toastify__progress-bar {
+  background: $primary-highlight-color;
+}

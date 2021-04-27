@@ -14,6 +14,7 @@ import { StoreContextType } from "../../types/store-context";
 import { AuthContext } from "../auth/auth.context";
 
 import { host } from "../../utils/env";
+import { ToastContext } from "../toast/toast.context";
 
 const StoreContext = createContext<StoreContextType>({
   projects: null,
@@ -58,6 +59,7 @@ const StoreProvider: FC = ({ children }) => {
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [workingProject, setWorkingProject] = useState<Project | null>(null);
   const [assignedTasks, setAssignedTasks] = useState<Task[] | null>(null);
+  const { notify } = useContext(ToastContext);
 
   /**
    * Gets all projects for the currently authenticated user. Called from
@@ -98,10 +100,11 @@ const StoreProvider: FC = ({ children }) => {
             resolve("Projects Received");
           })
           .catch((err) => {
+            notify(err.message, "error");
             reject(err);
           });
       }),
-    [token]
+    [token, notify]
   );
 
   /**
@@ -138,6 +141,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Project Details Received");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -197,9 +201,11 @@ const StoreProvider: FC = ({ children }) => {
           await getAllProjects();
         })
         .then(() => {
-          resolve("Projects Created");
+          notify("Project Created");
+          resolve("Project Created");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -223,9 +229,11 @@ const StoreProvider: FC = ({ children }) => {
           await getAllProjects();
         })
         .then(() => {
+          notify("Project Deleted");
           resolve("Deleted Project");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -276,12 +284,6 @@ const StoreProvider: FC = ({ children }) => {
             res.data.project.tasks,
             res.data.project.created
           );
-          // if (res.data.prjoect.title && res.data.prjoect.description) {
-          //   const newTitle: string = res.data.project.title
-          // const newDescription: string = res.data.project.title
-          // const updatedWorkingProject = {...workingProject, title: newTitle, description: newDescription}
-          // setWorkingProject(updatedWorkingProject);
-          // }
           setWorkingProject(receivedProject);
         })
         .then(async () => {
@@ -291,9 +293,11 @@ const StoreProvider: FC = ({ children }) => {
           await getAllProjects();
         })
         .then(() => {
+          notify("Project Updated");
           resolve("Updated Project");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -327,9 +331,11 @@ const StoreProvider: FC = ({ children }) => {
           await getASingleProject(projectId);
         })
         .then(() => {
+          notify("Member Added To Project");
           resolve("Member Added To Project");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -363,9 +369,11 @@ const StoreProvider: FC = ({ children }) => {
           await getASingleProject(projectId);
         })
         .then(() => {
+          notify("Member Deleted From Project");
           resolve("Member Deleted From Project");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -412,10 +420,11 @@ const StoreProvider: FC = ({ children }) => {
         return true;
       })
       .catch((err) => {
+        notify(err.message, "error");
         console.log(err);
         return false;
       });
-  }, [token]);
+  }, [token, notify]);
 
   /**
    * Creates a new task associated with a specified project.
@@ -462,9 +471,11 @@ const StoreProvider: FC = ({ children }) => {
           await getASingleProject(projectId);
         })
         .then(() => {
+          notify("Task Created");
           resolve("Task Created");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -521,9 +532,11 @@ const StoreProvider: FC = ({ children }) => {
           await getASingleProject(projectId);
         })
         .then(() => {
+          notify("Task Updated");
           resolve("Task Updated");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -549,9 +562,11 @@ const StoreProvider: FC = ({ children }) => {
           await getASingleProject(projectId);
         })
         .then(() => {
+          notify("Task Deleted");
           resolve("Task Deleted");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -587,9 +602,11 @@ const StoreProvider: FC = ({ children }) => {
           await getASingleProject(projectId);
         })
         .then(() => {
+          notify("Member Added To Project Task");
           resolve("Member Added To Project Task");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
@@ -624,9 +641,11 @@ const StoreProvider: FC = ({ children }) => {
           await getASingleProject(projectId);
         })
         .then(() => {
+          notify("Member Deleted From Project Task");
           resolve("Member Deleted From Project Task");
         })
         .catch((err) => {
+          notify(err.message, "error");
           reject(err);
         });
     });
