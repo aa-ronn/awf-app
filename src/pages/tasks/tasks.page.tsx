@@ -4,7 +4,7 @@ import { Fab } from "../../components/fab/fab.component";
 import { Card } from "../../components/card/card.component";
 import "./tasks.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Modal } from "../../components/modal/Modal.component";
+import { Modal } from "../../components/modal/modal.component";
 import { Form } from "../../components/form/form.component";
 import { Input } from "../../components/input/input.component";
 import { Select } from "../../components/select/select.component";

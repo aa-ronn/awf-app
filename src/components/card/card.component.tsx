@@ -15,6 +15,8 @@ interface ICard {
   line3?: string;
   cardClick?: MouseEventHandler<HTMLDivElement> | undefined;
   addMembersClick?: (type: string, id?: string) => void | undefined;
+  editTaskClick?: (type: string, taskID: string, title: string, due_Date: string,
+                   description: string) => void | undefined;
 }
 
 export const Card: FC<ICard> = ({
@@ -27,6 +29,7 @@ export const Card: FC<ICard> = ({
   line3,
   cardClick,
   addMembersClick,
+  editTaskClick
 }) => {
   const { workingProject, deleteAProject, deleteATask } = useContext(
     StoreContext
@@ -109,7 +112,9 @@ export const Card: FC<ICard> = ({
       <div className="card-button-wrapper">
         {type === "task" && (
           <Fragment>
-            <button onClick={() => {}}>Edit</button>
+            {editTaskClick && line3 &&
+            <button onClick={() => editTaskClick("edit-task", id, title, line2, line3)}>Edit</button>
+            }
             <button
               className="delete"
               onClick={() => deleteATask(id, secondaryId)}

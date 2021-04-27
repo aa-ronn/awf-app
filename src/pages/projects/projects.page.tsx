@@ -5,7 +5,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { StoreContext } from "../../context/store/store.context";
 import { Card } from "../../components/card/card.component";
-import { Modal } from "../../components/modal/Modal.component";
+import { Modal } from "../../components/modal/modal.component";
 import { Form } from "../../components/form/form.component";
 import { Input } from "../../components/input/input.component";
 import { useHistory } from "react-router-dom";

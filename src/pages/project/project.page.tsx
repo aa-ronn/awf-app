@@ -1,6 +1,6 @@
 import { Fab } from "../../components/fab/fab.component";
 import "./project.styles.scss";
-import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import {
   ChangeEvent,
   FormEvent,
@@ -16,7 +16,7 @@ import { MemberCard } from "../../components/card/member-card/member-card.compon
 import { useParams } from "react-router-dom";
 import { Tooltip } from "../../components/tooltip/tooltip.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Modal } from "../../components/modal/Modal.component";
+import { Modal } from "../../components/modal/modal.component";
 import { Form } from "../../components/form/form.component";
 import { Input } from "../../components/input/input.component";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
@@ -31,6 +31,8 @@ export const ProjectPage = () => {
     addMemberToAProject,
     deleteMemberFromAProject,
     addMemberToAProjectTask,
+    updateATask,
+    deleteMemberFromAProjectTask,
   } = useContext(StoreContext);
   const params = useParams<{ selectedProjectID: string }>();
   const [workingTaskId, setWorkingTaskId] = useState("");
@@ -52,6 +54,13 @@ export const ProjectPage = () => {
     description: string;
     dueDate: string;
   }>(initialTaskState);
+
+  const [editTaskState, setEditTaskState] = useState<{
+    taskID: string;
+    title: string;
+    dueDate: string;
+    description: string;
+  }>({taskID: "", title: "", dueDate: "", description: ""});
 
   useEffect(() => {
     if (!workingProject) {
@@ -95,6 +104,13 @@ export const ProjectPage = () => {
     if (type === "member" && id) {
       setWorkingTaskId(id);
     }
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
+  const handleEditTaskClick = (type: string, taskID: string, title: string, dueDate: string,
+                               description: string) => {
+    setEditTaskState({taskID, title, dueDate, description});
     setModalType(type);
     setIsModalOpen(true);
   };
@@ -162,17 +178,29 @@ export const ProjectPage = () => {
       | ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { value, name } = event.target;
-    console.log(name);
-    console.log(value);
     if (modalType === "member" || modalType === "memberToProject") {
       if (name === "email") {
         setAddMemberState(value);
       }
+    } else if (modalType === "edit-task") {
+      setEditTaskState({...editTaskState, [name]: value});
     } else {
       const { value, name } = event.target;
       setAddTaskState({ ...addTaskState, [name]: value });
     }
   };
+
+  const handleDeleteMemberFromTask = async (memberEmail: string) => {
+    if (workingProject) {
+      await deleteMemberFromAProjectTask(editTaskState.taskID, workingProject.id, memberEmail)
+          .then((res) => {
+            console.log("deleted member: ", res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
+  }
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -207,6 +235,17 @@ export const ProjectPage = () => {
             setIsLoading(false);
             console.log(err);
           });
+      }
+      else if (modalType === "edit-task") {
+        await updateATask(editTaskState.taskID, workingProject.id, editTaskState.title, editTaskState.description, editTaskState.dueDate)
+            .then((res) => {
+              console.log("edit task: ", res);
+              setIsModalOpen(false);
+              setModalType("");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
       } else {
         const { title, description, dueDate } = addTaskState;
         await createATask(workingProject.id, title, description, dueDate)
@@ -291,6 +330,63 @@ export const ProjectPage = () => {
           </Form>
         </Modal>
       )}
+      {isModalOpen && modalType === "edit-task" && (
+          <Modal setModalOpen={setIsModalOpen}>
+            <Form
+                title="Edit Task"
+                projectName={workingProject?.title}
+                emoji="📖"
+                buttonLabel="Edit Task"
+                handleSubmit={handleFormSubmit}
+            >
+              <Input
+                  name="title"
+                  label="Title"
+                  type="text"
+                  placeholder="Enter title"
+                  required
+                  value={editTaskState.title}
+                  handleChange={handleChange}
+              />
+              <Input
+                  name="description"
+                  label="Description"
+                  type="text"
+                  placeholder="Enter description"
+                  value={editTaskState.description}
+                  required
+                  handleChange={handleChange}
+              />
+              <Input
+                  name="dueDate"
+                  label="Due Date"
+                  type="date"
+                  required
+                  value={editTaskState.dueDate}
+                  handleChange={handleChange}
+              />
+              <div className="members-title">
+                <p>Members</p>
+              </div>
+              {workingProject &&
+              workingProject.tasks &&
+              workingProject.tasks.length > 0 &&
+              workingProject.tasks.find(task => task.id === editTaskState.taskID)?.assigned_to?.map(
+               (user, index) => {
+                  return (
+                      <div key={index} className="members-list">
+                        <p>
+                          {user.email}
+                        </p>
+                        <button type={"button"} onClick={() => handleDeleteMemberFromTask(user.email)}>
+                          <FontAwesomeIcon icon={faMinus} />
+                        </button>
+                      </div>
+                  )}
+              )}
+            </Form>
+          </Modal>
+      )}
       <div className="title-details">
         <Tooltip text="Click to edit">
           <h1
@@ -346,6 +442,7 @@ export const ProjectPage = () => {
                     line3={task.description}
                     cardClick={() => handleDeleteTaskCardClick(index)}
                     addMembersClick={handleFabClick}
+                    editTaskClick={handleEditTaskClick}
                   />
                 );
               })

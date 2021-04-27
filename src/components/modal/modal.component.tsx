@@ -2,7 +2,7 @@
 // Description: Modal component
 
 import { FC } from "react";
-import "./Modal.scss";
+import "./modal.scss";
 
 interface IModal {
   setModalOpen: (isOpen: boolean) => void;

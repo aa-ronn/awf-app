@@ -89,6 +89,25 @@
     }
   }
 
+  .members-list {
+    display: flex;
+
+    p {
+      width: 300px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  .members-title {
+    width: inherit;
+
+    p {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+  }
+
   @media (max-width: $tablet) {
     .content {
       width: 100%;

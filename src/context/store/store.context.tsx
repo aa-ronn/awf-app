@@ -623,7 +623,7 @@ const StoreProvider: FC = ({ children }) => {
       }
       axios({
         method: "delete",
-        url: `http://localhost:5000/projects/${projectId}/members/${taskId}/assigned`,
+        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}/assigned`,
         headers: {
           authorization: token,
         },
