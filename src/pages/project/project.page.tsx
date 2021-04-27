@@ -44,11 +44,6 @@ export const ProjectPage = () => {
     dueDate: "",
   };
 
-  // Setting the first project as the default value
-  // if (projects && projects.length > 0) {
-  //   initialTaskState.selectOption = projects[0].id;
-  // }
-
   const [addTaskState, setAddTaskState] = useState<{
     title: string;
     description: string;

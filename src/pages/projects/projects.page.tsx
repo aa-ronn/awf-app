@@ -24,7 +24,7 @@ export const ProjectsPage = () => {
 
   const handleCardClick = async (projectID: string) => {
     await getASingleProject(projectID);
-    history.push("/projects/" + projectID);
+    history.push("/monkey-business/projects/" + projectID);
   };
 
   const handleChange = (

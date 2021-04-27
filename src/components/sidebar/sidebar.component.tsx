@@ -22,13 +22,16 @@ export const Sidebar: FC<ISidebar> = ({ title }) => {
 
   const SidebarContent = () => (
     <Fragment>
-      <h2 className="sidebar-title" onClick={() => history.push("/")}>
+      <h2
+        className="sidebar-title"
+        onClick={() => history.push("/monkey-business/")}
+      >
         {!title ? "🐵 Business" : title}
       </h2>
       <UserDetailsBlock />
       <div className="link-blocks">
-        <LinkBlock text="📓  Projects" urlPath="/" />
-        <LinkBlock text="📖  Your Tasks" urlPath="/tasks" />
+        <LinkBlock text="📓  Projects" urlPath="/monkey-business/" />
+        <LinkBlock text="📖  Your Tasks" urlPath="/monkey-business/tasks" />
       </div>
     </Fragment>
   );
