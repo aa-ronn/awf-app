@@ -57,7 +57,8 @@ export const Card: FC<ICard> = ({
             : "Started: " + line1?.substring(0, 10)}
         </div>
         <div className="date">
-          End: {type === "task" && line2 !== undefined && line2}
+          {type === "task" && "End:"}
+          {type === "task" && line2 !== undefined && line2}
           {type === "task" && line2 === "" && "♾️"}
         </div>
         <p className="description">
