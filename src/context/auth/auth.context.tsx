@@ -53,7 +53,7 @@ const AuthProvider: FC = ({ children }) => {
           resolve("User created");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           console.log(err);
           reject(err);
         });
@@ -88,7 +88,7 @@ const AuthProvider: FC = ({ children }) => {
         })
         .catch((err) => {
           console.log(err);
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           console.log(err);
           reject(err);
         });

@@ -100,7 +100,7 @@ const StoreProvider: FC = ({ children }) => {
             resolve("Projects Received");
           })
           .catch((err) => {
-            notify(err.message, "error");
+            notify(err.response.data.error, "error");
             reject(err);
           });
       }),
@@ -141,7 +141,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Project Details Received");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -205,7 +205,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Project Created");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -234,7 +234,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Deleted Project");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -298,7 +298,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Updated Project");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -336,7 +336,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Added To Project");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -374,7 +374,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Deleted From Project");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -421,7 +421,7 @@ const StoreProvider: FC = ({ children }) => {
         return true;
       })
       .catch((err) => {
-        notify(err.message, "error");
+        notify(err.response.data.error, "error");
         console.log(err);
         return false;
       });
@@ -476,7 +476,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Task Created");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -537,7 +537,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Task Updated");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -568,7 +568,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Task Deleted");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -608,7 +608,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Added To Project Task");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
@@ -647,7 +647,7 @@ const StoreProvider: FC = ({ children }) => {
           resolve("Member Deleted From Project Task");
         })
         .catch((err) => {
-          notify(err.message, "error");
+          notify(err.response.data.error, "error");
           reject(err);
         });
     });
