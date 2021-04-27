@@ -8,6 +8,7 @@ export const SignInSignUpPage = () => {
 
   return (
     <div className="signin-signup-page">
+      <h2 className="signin-signup-title">🐵 Business</h2>
       {isSigningIn ? <SignIn /> : <SignUp />}
       <p
         className="need-an-account"

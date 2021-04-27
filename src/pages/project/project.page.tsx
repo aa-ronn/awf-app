@@ -71,7 +71,6 @@ export const ProjectPage = () => {
   }, []);
 
   const handleDeleteTaskCardClick = async (taskIndex: number) => {
-    // await getASingleProject(projectID);
     workingProject &&
       workingProject.tasks &&
       (await deleteATask(
@@ -94,13 +93,6 @@ export const ProjectPage = () => {
   };
 
   const handleFabClick = (type: string, id?: string) => {
-    // workingProject &&
-    //   workingProject.tasks &&
-    //   (await createATask(
-    //     workingProject.id,
-    //     "Task Name " + workingProject.tasks.length,
-    //     "Task Description " + workingProject.tasks.length
-    //   ));
     if (type === "member" && id) {
       setWorkingTaskId(id);
     }
@@ -285,8 +277,15 @@ export const ProjectPage = () => {
         (modalType === "member" || modalType === "memberToProject") && (
           <Modal setModalOpen={setIsModalOpen}>
             <Form
-              title="Add a Member"
+              title={`Add a Member to ${
+                modalType === "member" ? "Task" : "Project"
+              }`}
               projectName={workingProject?.title}
+              taskName={
+                workingProject?.tasks?.filter(
+                  (task) => task.id === workingTaskId
+                )[0].title
+              }
               emoji="🦧"
               buttonLabel="Add Member"
               handleSubmit={handleFormSubmit}

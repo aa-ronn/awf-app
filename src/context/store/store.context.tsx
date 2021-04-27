@@ -227,6 +227,7 @@ const StoreProvider: FC = ({ children }) => {
       })
         .then(async () => {
           await getAllProjects();
+          await getAllTasksAssignedToAUser();
         })
         .then(() => {
           notify("Project Deleted");
@@ -404,7 +405,7 @@ const StoreProvider: FC = ({ children }) => {
 
           receivedTasks.push(
             new Task(
-              task.task_id,
+              task.id,
               task.project_id,
               task.title,
               task.description,
@@ -560,6 +561,7 @@ const StoreProvider: FC = ({ children }) => {
       })
         .then(async () => {
           await getASingleProject(projectId);
+          await getAllTasksAssignedToAUser();
         })
         .then(() => {
           notify("Task Deleted");

@@ -6,6 +6,7 @@ interface IForm {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
   title: string;
   projectName?: string;
+  taskName?: string;
   buttonLabel: string;
   isLoading?: boolean;
   emoji?: string;
@@ -18,6 +19,7 @@ export const Form: FC<IForm> = ({
   isLoading = false,
   title,
   projectName,
+  taskName,
   buttonLabel,
   emoji,
 }) => {
@@ -26,9 +28,12 @@ export const Form: FC<IForm> = ({
       <h1>
         {title} {emoji}
       </h1>
-      {projectName &&
-        <div className="task-modal-project-name">{"Project: " + projectName}</div>
-      }
+      {projectName && (
+        <p className="task-modal-project-name">{"Project: " + projectName}</p>
+      )}
+      {taskName && (
+        <p className="task-modal-task-name">{"Task: " + taskName}</p>
+      )}
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className="children">{children}</div>
         <div className="submit-button">

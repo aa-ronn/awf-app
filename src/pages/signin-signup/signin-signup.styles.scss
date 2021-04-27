@@ -15,4 +15,29 @@
       color: $primary-color;
     }
   }
+
+  .signin-signup-title {
+    position: absolute;
+    top: -10px;
+    left: $size-md;
+    cursor: none;
+
+    &:after {
+      content: "";
+      position: absolute;
+      width: 0px;
+      height: 2px;
+      top: 30px;
+      left: 42px;
+      background-color: $primary-color;
+      transition: width 0.2s ease;
+    }
+
+    &:hover {
+      &:after {
+        width: 106px;
+        transition: width 0.2s ease;
+      }
+    }
+  }
 }

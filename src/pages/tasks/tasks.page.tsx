@@ -112,15 +112,16 @@ export const TasksPage = () => {
           assignedTasks.map((task, index) => {
             if (task) {
               const taskId = task.id;
+              const projectId = task.projectID;
               return (
                 <div key={index}>
                   <Card
                     id={taskId}
+                    secondaryId={projectId}
                     type="task"
                     title={task.title}
                     line1={task.created}
                     line2={task.due_date}
-                    //cardClick={() => handleCardClick(taskId)}
                   />
                 </div>
               );

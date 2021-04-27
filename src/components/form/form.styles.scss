@@ -6,11 +6,19 @@
 
   p {
     margin-bottom: 5px;
+    margin-top: 5px;
+
+    &:hover {
+      cursor: default !important;
+      color: $font-color-primary !important;
+    }
+
+    &.task-modal-task-name {
+      margin-bottom: 1rem;
+    }
   }
-  .task-modal-project-name {
-    font-weight: bold;
-    margin-top: -1.5rem;
-    margin-bottom: 2rem;
+  h1 {
+    margin-bottom: 0;
   }
 
   .children {
