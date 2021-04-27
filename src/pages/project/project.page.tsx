@@ -281,11 +281,6 @@ export const ProjectPage = () => {
                 modalType === "member" ? "Task" : "Project"
               }`}
               projectName={workingProject?.title}
-              taskName={
-                workingProject?.tasks?.filter(
-                  (task) => task.id === workingTaskId
-                )[0].title
-              }
               emoji="🦧"
               buttonLabel="Add Member"
               handleSubmit={handleFormSubmit}

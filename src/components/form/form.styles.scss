@@ -5,9 +5,7 @@
   padding: 1rem;
 
   p {
-    margin-bottom: 5px;
-    margin-top: 5px;
-
+    margin-top: 0;
     &:hover {
       cursor: default !important;
       color: $font-color-primary !important;
