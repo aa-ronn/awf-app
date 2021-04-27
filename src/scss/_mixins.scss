@@ -35,7 +35,7 @@
 }
 
 @mixin scrollable {
-  padding-right: 0.5rem;
+  padding-right: $size-md;
   overflow-x: hidden;
   overflow-y: auto;
 

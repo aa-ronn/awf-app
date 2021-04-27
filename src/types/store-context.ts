@@ -5,7 +5,6 @@ export type StoreContextType = {
   projects: Project[] | null;
   workingProject: Project | null;
   assignedTasks: Task[] | null;
-  workingTask: Task | null;
   getASingleProject: (id: string) => Promise<string>;
   createAProject: (title: string, description: string) => Promise<string>;
   deleteAProject: (id: string) => Promise<string>;
@@ -46,5 +45,4 @@ export type StoreContextType = {
     projectId: string,
     memberEmail: string
   ) => Promise<string>;
-  
 };

@@ -17,7 +17,6 @@ const StoreContext = createContext<StoreContextType>({
   projects: null,
   workingProject: null,
   assignedTasks: null,
-  workingTask: null,
   getASingleProject: async (id: string) => "",
   createAProject: async (title: string, description: string) => "",
   deleteAProject: async (id: string) => "",
@@ -57,7 +56,6 @@ const StoreProvider: FC = ({ children }) => {
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [workingProject, setWorkingProject] = useState<Project | null>(null);
   const [assignedTasks, setAssignedTasks] = useState<Task[] | null>(null);
-  const [workingTask, setWorkingTask] = useState<Task | null>(null);
 
   /**
    * Gets all projects for the currently authenticated user. Called from
@@ -653,20 +651,19 @@ const StoreProvider: FC = ({ children }) => {
       getAllProjects();
       getAllTasksAssignedToAUser();
     }
-  }, [getAllProjects, getAllTasksAssignedToAUser]);
+  }, [getAllProjects, getAllTasksAssignedToAUser, token]);
 
   useEffect(() => {
     if (token) {
       getAllTasksAssignedToAUser();
     }
-  }, [workingProject, getAllTasksAssignedToAUser]);
+  }, [workingProject, getAllTasksAssignedToAUser, token]);
   return (
     <StoreContext.Provider
       value={{
         projects,
         workingProject,
         assignedTasks,
-        workingTask,
         getASingleProject,
         createAProject,
         deleteAProject,

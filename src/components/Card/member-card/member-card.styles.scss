@@ -5,10 +5,12 @@
   border: 2px solid $primary-color;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: $size-md;
+  padding-right: 12px;
+
   .member-card-info {
-    padding: 2rem 0;
+    padding: $size-md;
     .member-name {
       color: $secondary-color;
       font-weight: bold;

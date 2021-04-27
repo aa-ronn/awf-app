@@ -11,20 +11,19 @@ import {
 } from "react";
 
 import { StoreContext } from "../../context/store/store.context";
-import { Card } from "../../components/Card/card.component";
-import { MemberCard } from "../../components/Card/member-card/member-card.component";
+import { Card } from "../../components/card/card.component";
+import { MemberCard } from "../../components/card/member-card/member-card.component";
 import { useParams } from "react-router-dom";
 import { Tooltip } from "../../components/tooltip/tooltip.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Modal } from "../../components/Modal/Modal.component";
+import { Modal } from "../../components/modal/Modal.component";
 import { Form } from "../../components/form/form.component";
 import { Input } from "../../components/input/input.component";
-import { Select } from "../../components/Select/select.component";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
 export const ProjectPage = () => {
   const {
     workingProject,
-    projects,
     createATask,
     deleteATask,
     getASingleProject,
@@ -143,6 +142,7 @@ export const ProjectPage = () => {
         finishEditDescription
       );
     };
+    // eslint-disable-next-line
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -171,6 +171,7 @@ export const ProjectPage = () => {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setIsLoading(true);
     if (workingProject) {
       if (modalType === "member") {
         await addMemberToAProjectTask(
@@ -181,9 +182,11 @@ export const ProjectPage = () => {
           .then((res) => {
             console.log("added member to project task: ", res);
             setIsModalOpen(false);
+            setIsLoading(false);
             setModalType("");
           })
           .catch((err) => {
+            setIsLoading(false);
             console.log(err);
           });
       } else if (modalType === "memberToProject") {
@@ -191,9 +194,11 @@ export const ProjectPage = () => {
           .then((res) => {
             console.log("added member: ", res);
             setIsModalOpen(false);
+            setIsLoading(false);
             setModalType("");
           })
           .catch((err) => {
+            setIsLoading(false);
             console.log(err);
           });
       } else {
@@ -202,13 +207,18 @@ export const ProjectPage = () => {
           .then((res) => {
             console.log("added task: ", res);
             setIsModalOpen(false);
+            setIsLoading(false);
           })
           .catch((err) => {
+            setIsLoading(false);
             console.log(err);
           });
       }
     }
   };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const { width } = useWindowDimensions();
 
   return (
     <div className="project-page">
@@ -221,6 +231,7 @@ export const ProjectPage = () => {
               emoji="🦧"
               buttonLabel="Add Member"
               handleSubmit={handleFormSubmit}
+              isLoading={isLoading}
             >
               <Input
                 name="email"
@@ -241,6 +252,7 @@ export const ProjectPage = () => {
             emoji="📖"
             buttonLabel="Add Task"
             handleSubmit={handleFormSubmit}
+            isLoading={isLoading}
           >
             <Input
               name="title"
@@ -295,57 +307,69 @@ export const ProjectPage = () => {
         <section className="project-tasks-section">
           <div className="title-and-button">
             <h2>Project Tasks</h2>
-            <button onClick={() => handleFabClick("task")}>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
+            <Tooltip
+              text="Add a new task"
+              position={width > 1200 ? "top" : "bottom"}
+            >
+              <button onClick={() => handleFabClick("task")}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </Tooltip>
           </div>
-          {workingProject &&
-          workingProject.tasks &&
-          workingProject.tasks.length > 0 ? (
-            workingProject.tasks.map((task, index) => {
-              return (
-                <Card
-                  key={index}
-                  id={task.id}
-                  secondaryId={workingProject.id}
-                  type="task"
-                  title={task.title}
-                  line1={task.created}
-                  line2={task.dueDate}
-                  line3={task.description}
-                  cardClick={() => handleDeleteTaskCardClick(index)}
-                  addMembersClick={handleFabClick}
-                />
-              );
-            })
-          ) : (
-            <p>No tasks in this project</p>
-          )}
+          <div className="task-cards">
+            {workingProject &&
+            workingProject.tasks &&
+            workingProject.tasks.length > 0 ? (
+              workingProject.tasks.map((task, index) => {
+                return (
+                  <Card
+                    key={index}
+                    id={task.id}
+                    secondaryId={workingProject.id}
+                    type="task"
+                    title={task.title}
+                    line1={task.created}
+                    line2={task.dueDate}
+                    line3={task.description}
+                    cardClick={() => handleDeleteTaskCardClick(index)}
+                    addMembersClick={handleFabClick}
+                  />
+                );
+              })
+            ) : (
+              <p>No tasks in this project</p>
+            )}
+          </div>
         </section>
         <section className="project-members-section">
           <div className="title-and-button">
             <h2>Project Members</h2>
-
-            <button onClick={() => handleFabClick("memberToProject")}>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
+            <Tooltip
+              text="Add a new project member"
+              position={width > 1200 ? "top" : "bottom"}
+            >
+              <button onClick={() => handleFabClick("memberToProject")}>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </Tooltip>
           </div>
-
-          {workingProject && workingProject.members ? (
-            workingProject.members.map((member, index) => {
-              return (
-                <MemberCard
-                  key={index}
-                  email={member.email}
-                  firstName={member.firstName}
-                  lastName={member.lastName}
-                  cardClick={() => handleDeleteMemberCardClick(index)}
-                />
-              );
-            })
-          ) : (
-            <p>No members in this project</p>
-          )}
+          <div className="member-cards">
+            {workingProject && workingProject.members ? (
+              workingProject.members.map((member, index) => {
+                return (
+                  <MemberCard
+                    key={index}
+                    email={member.email}
+                    firstName={member.firstName}
+                    lastName={member.lastName}
+                    cardClick={() => handleDeleteMemberCardClick(index)}
+                  />
+                );
+              })
+            ) : (
+              <p>No members in this project</p>
+            )}
+          </div>
         </section>
 
         <Fab icon={faPlus} text="Task" onClick={() => handleFabClick("task")} />

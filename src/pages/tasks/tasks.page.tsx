@@ -1,13 +1,13 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { StoreContext } from "../../context/store/store.context";
 import { Fab } from "../../components/fab/fab.component";
-import { Card } from "../../components/Card/card.component";
+import { Card } from "../../components/card/card.component";
 import "./tasks.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Modal } from "../../components/Modal/Modal.component";
+import { Modal } from "../../components/modal/Modal.component";
 import { Form } from "../../components/form/form.component";
 import { Input } from "../../components/input/input.component";
-import { Select } from "../../components/Select/select.component";
+import { Select } from "../../components/select/select.component";
 
 export const TasksPage = () => {
   const { assignedTasks, createATask, projects } = useContext(StoreContext);
@@ -39,24 +39,26 @@ export const TasksPage = () => {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setIsLoading(true);
     const { selectOption, title, description } = addTaskState;
 
     await createATask(selectOption, title, description)
       .then((res) => {
         console.log("added task: ", res);
         setIsModalOpen(false);
+        setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         console.log(err);
       });
   };
 
-  const handleCardClick = async (taskID: string) => {
-    console.log(taskID);
-  };
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="tasks-page">
-      <h1>Assigned Task</h1>
+      <h1>Assigned Task 📖</h1>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
           <Form
@@ -64,6 +66,7 @@ export const TasksPage = () => {
             emoji="📖"
             buttonLabel="Add Task"
             handleSubmit={handleFormSubmit}
+            isLoading={isLoading}
           >
             <Input
               name="title"

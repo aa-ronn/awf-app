@@ -1,18 +1,9 @@
-import {
-  FC,
-  Fragment,
-  MouseEventHandler,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { FC, Fragment, MouseEventHandler, useContext } from "react";
 import { Tooltip } from "../tooltip/tooltip.component";
 import { StoreContext } from "../../context/store/store.context";
 import "./card.styles.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Project } from "../../models/project";
-import { Task } from "../../models/task";
 
 interface ICard {
   type?: string;
@@ -37,12 +28,9 @@ export const Card: FC<ICard> = ({
   cardClick,
   addMembersClick,
 }) => {
-  const {
-    workingProject,
-    deleteAProject,
-    updateATask,
-    deleteATask,
-  } = useContext(StoreContext);
+  const { workingProject, deleteAProject, deleteATask } = useContext(
+    StoreContext
+  );
 
   return (
     <div
@@ -79,7 +67,7 @@ export const Card: FC<ICard> = ({
                   .map((task) => {
                     let text: string[] = [];
                     if (task.assigned_to && task.assigned_to.length > 0) {
-                      task.assigned_to?.map((member) => {
+                      task.assigned_to?.forEach((member) => {
                         text.push(
                           member.firstName + " " + member.lastName + "\n"
                         );

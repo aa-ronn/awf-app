@@ -4,8 +4,8 @@ import "./projects.styles.scss";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { StoreContext } from "../../context/store/store.context";
-import { Card } from "../../components/Card/card.component";
-import { Modal } from "../../components/Modal/Modal.component";
+import { Card } from "../../components/card/card.component";
+import { Modal } from "../../components/modal/Modal.component";
 import { Form } from "../../components/form/form.component";
 import { Input } from "../../components/input/input.component";
 import { useHistory } from "react-router-dom";
@@ -40,21 +40,26 @@ export const ProjectsPage = () => {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setIsLoading(true);
     const { title, description } = addProjectState;
 
     await createAProject(title, description)
       .then((res) => {
         console.log("added project: ", res);
         setIsModalOpen(false);
+        setIsLoading(false);
       })
       .catch(() => {
+        setIsLoading(false);
         console.log("error adding project");
       });
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="projects-page">
-      <h1>Your Projects</h1>
+      <h1>Your Projects 📓</h1>
       {isModalOpen && (
         <Modal setModalOpen={setIsModalOpen}>
           <Form
@@ -62,6 +67,7 @@ export const ProjectsPage = () => {
             emoji="📓"
             buttonLabel="Add Project"
             handleSubmit={handleFormSubmit}
+            isLoading={isLoading}
           >
             <Input
               name="title"

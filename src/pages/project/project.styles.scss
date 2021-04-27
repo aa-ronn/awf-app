@@ -11,6 +11,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    z-index: 99;
 
     h1 {
       margin: 0;
@@ -18,7 +19,6 @@
     }
 
     p {
-      margin-top: 2px;
       margin-top: 2px;
       cursor: pointer;
     }
@@ -30,41 +30,62 @@
     grid-template-columns: 1fr 300px;
     height: calc(100vh - 175px);
     width: fit-content;
-    @include scrollable;
 
     .title-and-button {
       position: sticky;
-      top: 0;
+      top: -1px;
       background-color: $backgroud-color;
       margin-bottom: $size-md;
       padding-top: $size-sm;
+      padding-bottom: $size-sm;
+      z-index: 99;
       h2 {
         margin: 0;
+        margin-right: $size-md;
       }
       display: flex;
       align-items: center;
-
-      button {
-        margin-left: $size-md;
-      }
     }
 
     .project-tasks-section {
-      @include scrollable;
+      .task-cards {
+        @include scrollable;
+        max-height: calc(100vh - 240px);
+      }
       .member-card {
         margin: $size-md;
       }
     }
 
     .project-members-section {
-      @include scrollable;
+      .member-cards {
+        @include scrollable;
+        max-height: calc(100vh - 240px);
+      }
       .member-card {
         margin: $size-md;
       }
     }
 
     @media (max-width: $desktop) {
+      @include scrollable;
       grid-template-columns: 1fr;
+      .project-members-section {
+        margin-bottom: $size-md;
+        .member-cards {
+          max-height: fit-content;
+        }
+        grid-row-start: 1;
+        grid-row-end: 2;
+      }
+
+      .project-tasks-section {
+        .task-cards {
+          max-height: fit-content;
+        }
+        grid-row-start: 2;
+        grid-row-end: 3;
+      }
     }
   }
 
