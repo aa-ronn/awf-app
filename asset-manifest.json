@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/monkey-business/static/css/main.475a8022.chunk.css",
-    "main.js": "/monkey-business/static/js/main.3dff67d2.chunk.js",
-    "main.js.map": "/monkey-business/static/js/main.3dff67d2.chunk.js.map",
+    "main.js": "/monkey-business/static/js/main.17a29899.chunk.js",
+    "main.js.map": "/monkey-business/static/js/main.17a29899.chunk.js.map",
     "runtime-main.js": "/monkey-business/static/js/runtime-main.a9d50788.js",
     "runtime-main.js.map": "/monkey-business/static/js/runtime-main.a9d50788.js.map",
     "static/css/2.97503911.chunk.css": "/monkey-business/static/css/2.97503911.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.97503911.chunk.css",
     "static/js/2.f46df112.chunk.js",
     "static/css/main.475a8022.chunk.css",
-    "static/js/main.3dff67d2.chunk.js"
+    "static/js/main.17a29899.chunk.js"
   ]
 }
