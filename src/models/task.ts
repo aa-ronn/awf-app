@@ -5,7 +5,7 @@ export class Task {
   projectID: string;
   title: string;
   description: string;
-  dueDate: string;
+  due_date: string;
   assigned_to: User[] | null | undefined;
   created: string | null;
 
@@ -23,7 +23,7 @@ export class Task {
     this.title = title;
     this.description = description;
     this.created = created;
-    this.dueDate = dueDate;
+    this.due_date = dueDate;
     this.assigned_to = assigned_to;
   }
 }

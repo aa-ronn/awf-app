@@ -36,7 +36,7 @@ export const ProjectPage = () => {
   const params = useParams<{ selectedProjectID: string }>();
   const [workingTaskId, setWorkingTaskId] = useState("");
 
-  const initialTaskState = { selectOption: "", title: "", description: "" };
+  const initialTaskState = { selectOption: "", title: "", description: "", dueDate: "" };
 
   // Setting the first project as the default value
   // if (projects && projects.length > 0) {
@@ -46,6 +46,7 @@ export const ProjectPage = () => {
   const [addTaskState, setAddTaskState] = useState<{
     title: string;
     description: string;
+    dueDate: string;
   }>(initialTaskState);
 
   useEffect(() => {
@@ -197,8 +198,8 @@ export const ProjectPage = () => {
             console.log(err);
           });
       } else {
-        const { title, description } = addTaskState;
-        await createATask(workingProject.id, title, description)
+        const { title, description, dueDate } = addTaskState;
+        await createATask(workingProject.id, title, description, dueDate)
           .then((res) => {
             console.log("added task: ", res);
             setIsModalOpen(false);
@@ -258,6 +259,13 @@ export const ProjectPage = () => {
               required
               handleChange={handleChange}
             />
+            <Input
+                name="dueDate"
+                label="Due Date"
+                type="date"
+                required
+                handleChange={handleChange}
+            />
             {/* <Select
               handleChange={handleChange}
               label="Project"
@@ -311,7 +319,7 @@ export const ProjectPage = () => {
                   type="task"
                   title={task.title}
                   line1={task.created}
-                  line2={task.dueDate}
+                  line2={task.due_date}
                   line3={task.description}
                   cardClick={() => handleDeleteTaskCardClick(index)}
                   addMembersClick={handleFabClick}
