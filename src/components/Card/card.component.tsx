@@ -99,7 +99,7 @@ export const Card: FC<ICard> = ({
                       if (task.assigned_to && task.assigned_to.length > 0) {
                         return "Members assigned " + task.assigned_to.length;
                       } else {
-                        return "No members assinged";
+                        return "No members assigned";
                       }
                     })}
               </div>
