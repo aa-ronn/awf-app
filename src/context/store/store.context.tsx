@@ -13,6 +13,8 @@ import { User } from "../../models/user";
 import { StoreContextType } from "../../types/store-context";
 import { AuthContext } from "../auth/auth.context";
 
+import { host } from "../../utils/env";
+
 const StoreContext = createContext<StoreContextType>({
   projects: null,
   workingProject: null,
@@ -68,7 +70,7 @@ const StoreProvider: FC = ({ children }) => {
       new Promise((resolve, reject) => {
         axios({
           method: "get",
-          url: "http://localhost:5000/projects",
+          url: host + "/projects",
           headers: {
             authorization: token,
           },
@@ -113,7 +115,7 @@ const StoreProvider: FC = ({ children }) => {
     new Promise((resolve, reject) => {
       axios({
         method: "get",
-        url: "http://localhost:5000/projects/" + id,
+        url: host + "/projects/" + id,
         headers: {
           authorization: token,
         },
@@ -157,7 +159,7 @@ const StoreProvider: FC = ({ children }) => {
     new Promise((resolve, reject) => {
       axios({
         method: "post",
-        url: "http://localhost:5000/projects",
+        url: host + "/projects",
         headers: {
           authorization: token,
         },
@@ -216,7 +218,7 @@ const StoreProvider: FC = ({ children }) => {
     new Promise((resolve, reject) => {
       axios({
         method: "delete",
-        url: "http://localhost:5000/projects/" + id,
+        url: host + "/projects/" + id,
         headers: {
           authorization: token,
         },
@@ -263,7 +265,7 @@ const StoreProvider: FC = ({ children }) => {
 
       axios({
         method: "put",
-        url: "http://localhost:5000/projects/" + id,
+        url: host + "/projects/" + id,
         headers: {
           authorization: token,
         },
@@ -386,7 +388,7 @@ const StoreProvider: FC = ({ children }) => {
   const getAllTasksAssignedToAUser = useCallback(async () => {
     await axios({
       method: "get",
-      url: "http://localhost:5000/tasks",
+      url: host + "/tasks",
       headers: {
         authorization: token,
       },

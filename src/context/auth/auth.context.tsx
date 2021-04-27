@@ -2,6 +2,7 @@ import axios from "axios";
 import { FC, createContext, useState } from "react";
 import { AuthContextType } from "../../types/auth-context";
 import { User } from "../../models/user";
+import { host } from "../../utils/env";
 
 const AuthContext = createContext<AuthContextType>({
   token: null,
@@ -32,7 +33,7 @@ const AuthProvider: FC = ({ children }) => {
     new Promise((resolve, reject) => {
       axios({
         method: "post",
-        url: "http://localhost:5000/auth/register",
+        url: host + "/register",
         data: {
           firstName: firstName,
           lastName: lastName,
@@ -66,7 +67,7 @@ const AuthProvider: FC = ({ children }) => {
     new Promise((resolve, reject) => {
       axios({
         method: "post",
-        url: "http://localhost:5000/auth/login",
+        url: host + "/auth/login",
         data: {
           email: email,
           password: password,
