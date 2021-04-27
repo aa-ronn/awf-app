@@ -13,7 +13,12 @@ export const TasksPage = () => {
   const { assignedTasks, createATask, projects } = useContext(StoreContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const initialTaskState = { selectOption: "", title: "", description: "" };
+  const initialTaskState = {
+    selectOption: "",
+    title: "",
+    description: "",
+    dueDate: "",
+  };
 
   // Setting the first project as the default value
   if (projects && projects.length > 0) {
@@ -24,6 +29,7 @@ export const TasksPage = () => {
     selectOption: string;
     title: string;
     description: string;
+    dueDate: string;
   }>(initialTaskState);
 
   const handleChange = (
@@ -40,9 +46,9 @@ export const TasksPage = () => {
     event.preventDefault();
 
     setIsLoading(true);
-    const { selectOption, title, description } = addTaskState;
+    const { selectOption, title, description, dueDate } = addTaskState;
 
-    await createATask(selectOption, title, description)
+    await createATask(selectOption, title, description, dueDate)
       .then((res) => {
         console.log("added task: ", res);
         setIsModalOpen(false);
@@ -84,6 +90,13 @@ export const TasksPage = () => {
               required
               handleChange={handleChange}
             />
+            <Input
+              name="dueDate"
+              label="Due Date"
+              type="date"
+              required
+              handleChange={handleChange}
+            />
             <Select
               handleChange={handleChange}
               label="Project"
@@ -106,7 +119,7 @@ export const TasksPage = () => {
                     type="task"
                     title={task.title}
                     line1={task.created}
-                    line2={task.dueDate}
+                    line2={task.due_date}
                     //cardClick={() => handleCardClick(taskId)}
                   />
                 </div>
