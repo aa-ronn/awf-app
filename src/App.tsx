@@ -36,22 +36,29 @@ function App() {
               <div className="page-postion">
                 <Header />
                 <Switch>
-                  <Route exact path="/" component={ProjectsPage} />
-                  <Route exact path="/projects" component={ProjectsPage} />
                   <Route
                     exact
-                    path="/monkey-business"
+                    path="/monkey-business/"
                     component={ProjectsPage}
                   />
-                  <Route exact path="/tasks" component={TasksPage} />
                   <Route
                     exact
-                    path="/projects/:selectedProjectID"
+                    path="/monkey-business/projects"
+                    component={ProjectsPage}
+                  />
+                  <Route
+                    exact
+                    path="/monkey-business/tasks"
+                    component={TasksPage}
+                  />
+                  <Route
+                    exact
+                    path="/monkey-business/projects/:selectedProjectID"
                     component={ProjectPage}
                   />
                   <Route
                     exact
-                    path="/projects/:selectedProjectID/tasks/:selectedTaskID"
+                    path="/monkey-business/projects/:selectedProjectID/tasks/:selectedTaskID"
                     component={ProjectsPage}
                   />
                   <Route exact path="*" component={_404Page} />
