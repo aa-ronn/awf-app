@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/monkey-business/static/css/main.2780ab08.chunk.css",
-    "main.js": "/monkey-business/static/js/main.c3aba931.chunk.js",
-    "main.js.map": "/monkey-business/static/js/main.c3aba931.chunk.js.map",
+    "main.css": "/monkey-business/static/css/main.a77e71df.chunk.css",
+    "main.js": "/monkey-business/static/js/main.ccdd4e4c.chunk.js",
+    "main.js.map": "/monkey-business/static/js/main.ccdd4e4c.chunk.js.map",
     "runtime-main.js": "/monkey-business/static/js/runtime-main.a9d50788.js",
     "runtime-main.js.map": "/monkey-business/static/js/runtime-main.a9d50788.js.map",
     "static/css/2.97503911.chunk.css": "/monkey-business/static/css/2.97503911.chunk.css",
@@ -12,14 +12,14 @@
     "static/js/3.37668cc4.chunk.js.map": "/monkey-business/static/js/3.37668cc4.chunk.js.map",
     "index.html": "/monkey-business/index.html",
     "static/css/2.97503911.chunk.css.map": "/monkey-business/static/css/2.97503911.chunk.css.map",
-    "static/css/main.2780ab08.chunk.css.map": "/monkey-business/static/css/main.2780ab08.chunk.css.map",
+    "static/css/main.a77e71df.chunk.css.map": "/monkey-business/static/css/main.a77e71df.chunk.css.map",
     "static/js/2.f46df112.chunk.js.LICENSE.txt": "/monkey-business/static/js/2.f46df112.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.a9d50788.js",
     "static/css/2.97503911.chunk.css",
     "static/js/2.f46df112.chunk.js",
-    "static/css/main.2780ab08.chunk.css",
-    "static/js/main.c3aba931.chunk.js"
+    "static/css/main.a77e71df.chunk.css",
+    "static/js/main.ccdd4e4c.chunk.js"
   ]
 }
