@@ -38,6 +38,11 @@ function App() {
                 <Switch>
                   <Route exact path="/" component={ProjectsPage} />
                   <Route exact path="/projects" component={ProjectsPage} />
+                  <Route
+                    exact
+                    path="/monkey-business"
+                    component={ProjectsPage}
+                  />
                   <Route exact path="/tasks" component={TasksPage} />
                   <Route
                     exact

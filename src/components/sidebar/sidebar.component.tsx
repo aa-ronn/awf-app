@@ -23,7 +23,7 @@ export const Sidebar: FC<ISidebar> = ({ title }) => {
   const SidebarContent = () => (
     <Fragment>
       <h2 className="sidebar-title" onClick={() => history.push("/")}>
-        {!title ? "🐵 Projects" : title}
+        {!title ? "🐵 Business" : title}
       </h2>
       <UserDetailsBlock />
       <div className="link-blocks">
