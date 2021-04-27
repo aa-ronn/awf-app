@@ -1,6 +1,8 @@
 @use "../../scss/consts" as *;
 
 .input-component-wrapper {
+  display: flex;
+
   p {
     @include sub-title-font;
     margin-bottom: 5px;
@@ -10,6 +12,11 @@
     @include regular-font;
     @include border-main;
     padding: 5px 10px;
+    max-width: 250px;
+  }
+
+  select {
+    max-width: 250px;
   }
 
   label {

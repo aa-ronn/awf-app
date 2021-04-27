@@ -353,28 +353,6 @@ export const ProjectPage = () => {
               <p>No tasks in this project</p>
             )}
           </div>
-          {workingProject &&
-          workingProject.tasks &&
-          workingProject.tasks.length > 0 ? (
-            workingProject.tasks.map((task, index) => {
-              return (
-                <Card
-                  key={index}
-                  id={task.id}
-                  secondaryId={workingProject.id}
-                  type="task"
-                  title={task.title}
-                  line1={task.created}
-                  line2={task.due_date}
-                  line3={task.description}
-                  cardClick={() => handleDeleteTaskCardClick(index)}
-                  addMembersClick={handleFabClick}
-                />
-              );
-            })
-          ) : (
-            <p>No tasks in this project</p>
-          )}
         </section>
         <section className="project-members-section">
           <div className="title-and-button">
