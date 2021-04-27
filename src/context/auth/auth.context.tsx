@@ -33,7 +33,7 @@ const AuthProvider: FC = ({ children }) => {
     new Promise((resolve, reject) => {
       axios({
         method: "post",
-        url: host + "/register",
+        url: host + "/auth/register",
         data: {
           firstName: firstName,
           lastName: lastName,

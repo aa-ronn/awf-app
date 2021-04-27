@@ -76,7 +76,6 @@ const StoreProvider: FC = ({ children }) => {
           },
         })
           .then((res: any) => {
-            console.log(res.data);
             let receivedProjects = new Array<Project>();
 
             for (let index = 0; index < res.data.projects.length; index++) {
@@ -121,8 +120,6 @@ const StoreProvider: FC = ({ children }) => {
         },
       })
         .then((res: any) => {
-          console.log(res.data);
-
           const memberList: User[] = [...res.data.project.members];
           const taskList: Task[] = [...res.data.project.tasks];
 
@@ -169,7 +166,6 @@ const StoreProvider: FC = ({ children }) => {
         },
       })
         .then((res: any) => {
-          console.log(res.data);
           if (projects) {
             setProjects([
               ...projects,
@@ -272,7 +268,6 @@ const StoreProvider: FC = ({ children }) => {
         data,
       })
         .then((res: any) => {
-          console.log(res.data);
           const receivedProject = new Project(
             res.data.project.id,
             res.data.project.title,
@@ -320,7 +315,7 @@ const StoreProvider: FC = ({ children }) => {
       }
       axios({
         method: "post",
-        url: `http://localhost:5000/projects/${projectId}/members`,
+        url: host + `/projects/${projectId}/members`,
         headers: {
           authorization: token,
         },
@@ -356,7 +351,7 @@ const StoreProvider: FC = ({ children }) => {
       }
       axios({
         method: "delete",
-        url: `http://localhost:5000/projects/${projectId}/members`,
+        url: host + `/projects/${projectId}/members`,
         headers: {
           authorization: token,
         },
@@ -394,7 +389,6 @@ const StoreProvider: FC = ({ children }) => {
       },
     })
       .then((res: any) => {
-        console.log(res.data);
         let receivedTasks = new Array<Task>();
 
         for (let index = 0; index < res.data.tasks.length; index++) {
@@ -455,14 +449,13 @@ const StoreProvider: FC = ({ children }) => {
 
       axios({
         method: "post",
-        url: `http://localhost:5000/projects/${projectId}/tasks`,
+        url: host + `/projects/${projectId}/tasks`,
         headers: {
           authorization: token,
         },
         data,
       })
         .then(async (res: any) => {
-          console.log(res.data);
           await getAllTasksAssignedToAUser();
         })
         .then(async () => {
@@ -518,15 +511,12 @@ const StoreProvider: FC = ({ children }) => {
 
       axios({
         method: "put",
-        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}`,
+        url: host + `/projects/${projectId}/tasks/${taskId}`,
         headers: {
           authorization: token,
         },
         data,
       })
-        .then((res: any) => {
-          console.log(res.data);
-        })
         .then(async () => {
           await getASingleProject(projectId);
         })
@@ -550,14 +540,11 @@ const StoreProvider: FC = ({ children }) => {
       console.log("deleting task...");
       axios({
         method: "delete",
-        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}`,
+        url: host + `/projects/${projectId}/tasks/${taskId}`,
         headers: {
           authorization: token,
         },
       })
-        .then((res: any) => {
-          console.log(res.data);
-        })
         .then(async () => {
           await getASingleProject(projectId);
         })
@@ -588,7 +575,7 @@ const StoreProvider: FC = ({ children }) => {
 
       axios({
         method: "post",
-        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}/assigned`,
+        url: host + `/projects/${projectId}/tasks/${taskId}/assigned`,
         headers: {
           authorization: token,
         },
@@ -625,7 +612,7 @@ const StoreProvider: FC = ({ children }) => {
       }
       axios({
         method: "delete",
-        url: `http://localhost:5000/projects/${projectId}/tasks/${taskId}/assigned`,
+        url: host + `/projects/${projectId}/tasks/${taskId}/assigned`,
         headers: {
           authorization: token,
         },

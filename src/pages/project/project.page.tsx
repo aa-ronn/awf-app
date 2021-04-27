@@ -60,7 +60,7 @@ export const ProjectPage = () => {
     title: string;
     dueDate: string;
     description: string;
-  }>({taskID: "", title: "", dueDate: "", description: ""});
+  }>({ taskID: "", title: "", dueDate: "", description: "" });
 
   useEffect(() => {
     if (!workingProject) {
@@ -108,9 +108,14 @@ export const ProjectPage = () => {
     setIsModalOpen(true);
   };
 
-  const handleEditTaskClick = (type: string, taskID: string, title: string, dueDate: string,
-                               description: string) => {
-    setEditTaskState({taskID, title, dueDate, description});
+  const handleEditTaskClick = (
+    type: string,
+    taskID: string,
+    title: string,
+    dueDate: string,
+    description: string
+  ) => {
+    setEditTaskState({ taskID, title, dueDate, description });
     setModalType(type);
     setIsModalOpen(true);
   };
@@ -183,7 +188,7 @@ export const ProjectPage = () => {
         setAddMemberState(value);
       }
     } else if (modalType === "edit-task") {
-      setEditTaskState({...editTaskState, [name]: value});
+      setEditTaskState({ ...editTaskState, [name]: value });
     } else {
       const { value, name } = event.target;
       setAddTaskState({ ...addTaskState, [name]: value });
@@ -192,15 +197,19 @@ export const ProjectPage = () => {
 
   const handleDeleteMemberFromTask = async (memberEmail: string) => {
     if (workingProject) {
-      await deleteMemberFromAProjectTask(editTaskState.taskID, workingProject.id, memberEmail)
-          .then((res) => {
-            console.log("deleted member: ", res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+      await deleteMemberFromAProjectTask(
+        editTaskState.taskID,
+        workingProject.id,
+        memberEmail
+      )
+        .then((res) => {
+          console.log("deleted member: ", res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }
+  };
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -235,17 +244,22 @@ export const ProjectPage = () => {
             setIsLoading(false);
             console.log(err);
           });
-      }
-      else if (modalType === "edit-task") {
-        await updateATask(editTaskState.taskID, workingProject.id, editTaskState.title, editTaskState.description, editTaskState.dueDate)
-            .then((res) => {
-              console.log("edit task: ", res);
-              setIsModalOpen(false);
-              setModalType("");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+      } else if (modalType === "edit-task") {
+        await updateATask(
+          editTaskState.taskID,
+          workingProject.id,
+          editTaskState.title,
+          editTaskState.description,
+          editTaskState.dueDate
+        )
+          .then((res) => {
+            console.log("edit task: ", res);
+            setIsModalOpen(false);
+            setModalType("");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
         const { title, description, dueDate } = addTaskState;
         await createATask(workingProject.id, title, description, dueDate)
@@ -331,61 +345,64 @@ export const ProjectPage = () => {
         </Modal>
       )}
       {isModalOpen && modalType === "edit-task" && (
-          <Modal setModalOpen={setIsModalOpen}>
-            <Form
-                title="Edit Task"
-                projectName={workingProject?.title}
-                emoji="📖"
-                buttonLabel="Edit Task"
-                handleSubmit={handleFormSubmit}
-            >
-              <Input
-                  name="title"
-                  label="Title"
-                  type="text"
-                  placeholder="Enter title"
-                  required
-                  value={editTaskState.title}
-                  handleChange={handleChange}
-              />
-              <Input
-                  name="description"
-                  label="Description"
-                  type="text"
-                  placeholder="Enter description"
-                  value={editTaskState.description}
-                  required
-                  handleChange={handleChange}
-              />
-              <Input
-                  name="dueDate"
-                  label="Due Date"
-                  type="date"
-                  required
-                  value={editTaskState.dueDate}
-                  handleChange={handleChange}
-              />
-              <div className="members-title">
-                <p>Members</p>
-              </div>
-              {workingProject &&
+        <Modal setModalOpen={setIsModalOpen}>
+          <Form
+            title="Edit Task"
+            projectName={workingProject?.title}
+            emoji="📖"
+            buttonLabel="Edit Task"
+            handleSubmit={handleFormSubmit}
+            isLoading={isLoading}
+          >
+            <Input
+              name="title"
+              label="Title"
+              type="text"
+              placeholder="Enter title"
+              required
+              value={editTaskState.title}
+              handleChange={handleChange}
+            />
+            <Input
+              name="description"
+              label="Description"
+              type="text"
+              placeholder="Enter description"
+              value={editTaskState.description}
+              required
+              handleChange={handleChange}
+            />
+            <Input
+              name="dueDate"
+              label="Due Date"
+              type="date"
+              required
+              value={editTaskState.dueDate}
+              handleChange={handleChange}
+            />
+            <div className="members-title">
+              <p>Members</p>
+            </div>
+            {workingProject &&
               workingProject.tasks &&
               workingProject.tasks.length > 0 &&
-              workingProject.tasks.find(task => task.id === editTaskState.taskID)?.assigned_to?.map(
-               (user, index) => {
+              workingProject.tasks
+                .find((task) => task.id === editTaskState.taskID)
+                ?.assigned_to?.map((user, index) => {
                   return (
-                      <div key={index} className="members-list">
-                        <p>
-                          {user.email}
-                        </p>
-                        <button type={"button"} onClick={() => handleDeleteMemberFromTask(user.email)}>
-                          <FontAwesomeIcon icon={faMinus} />
-                        </button>
-                      </div>
-                  )}
-              )}
-            </Form>
-          </Modal>
+                    <div key={index} className="members-list">
+                      <p>{user.email}</p>
+                      <button
+                        type={"button"}
+                        onClick={() => handleDeleteMemberFromTask(user.email)}
+                      >
+                        <FontAwesomeIcon icon={faMinus} />
+                      </button>
+                    </div>
+                  );
+                })}
+          </Form>
+        </Modal>
       )}
       <div className="title-details">
         <Tooltip text="Click to edit">
