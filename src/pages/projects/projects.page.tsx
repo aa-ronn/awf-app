@@ -106,6 +106,7 @@ export const ProjectsPage = () => {
         <Fab
           icon={faPlus}
           text="Project"
+          isDisabled={isModalOpen}
           onClick={() => setIsModalOpen(true)}
         />
       </div>

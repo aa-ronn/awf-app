@@ -1,0 +1,15 @@
+@use "../../scss//media" as *;
+
+.signin-component {
+  h1 {
+    margin-bottom: 2rem;
+
+    @media (max-width: $tablet) {
+      margin-top: 2rem;
+    }
+  }
+
+  button {
+    margin-bottom: 2rem;
+  }
+}

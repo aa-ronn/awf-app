@@ -37,4 +37,10 @@
       margin-right: $size-sm;
     }
   }
+
+  &.disabled {
+    pointer-events: none;
+    box-shadow: none;
+    background-color: #a3a3a3;
+  }
 }

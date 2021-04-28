@@ -488,7 +488,12 @@ export const ProjectPage = () => {
           </div>
         </section>
 
-        <Fab icon={faPlus} text="Task" onClick={() => handleFabClick("task")} />
+        <Fab
+          icon={faPlus}
+          text="Task"
+          onClick={() => handleFabClick("task")}
+          isDisabled={isModalOpen}
+        />
       </div>
     </div>
   );

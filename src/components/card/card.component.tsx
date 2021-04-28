@@ -69,22 +69,22 @@ export const Card: FC<ICard> = ({
         {type === "task" && workingProject?.tasks && (
           <div className="assigned-members-wrapper">
             <Tooltip
-              text={
+              textArray={
                 workingProject.tasks &&
                 workingProject.tasks
                   .filter((taskId) => taskId.id === id)
                   .map((task) => {
-                    let text: string[] = [];
+                    let textArray: string[] = [];
                     if (task.assigned_to && task.assigned_to.length > 0) {
                       task.assigned_to?.forEach((member) => {
-                        text.push(
-                          member.firstName + " " + member.lastName + "\n"
+                        textArray.push(
+                          member.firstName + " " + member.lastName
                         );
                       });
                     } else {
-                      text.push("No members assigned");
+                      textArray.push("No members assigned");
                     }
-                    return text;
+                    return textArray;
                   })
               }
             >

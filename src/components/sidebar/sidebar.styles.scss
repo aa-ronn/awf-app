@@ -75,6 +75,14 @@
     transform: translateX(-110vw);
     will-change: transform;
     transition: transform 0.6s;
+
+    .sidebar-title {
+      cursor: pointer;
+
+      &:after {
+        top: 93px;
+      }
+    }
   }
 
   h2 {

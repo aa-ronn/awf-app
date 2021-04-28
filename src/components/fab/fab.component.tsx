@@ -11,12 +11,21 @@ interface IFab {
   icon: FontAwesomeIconProps | any;
   text?: string;
   shape?: "circle" | "pill";
+  isDisabled?: boolean;
 }
 
-export const Fab: FC<IFab> = ({ onClick, icon, text, shape = "circle" }) => {
+export const Fab: FC<IFab> = ({
+  onClick,
+  icon,
+  text,
+  shape = "circle",
+  isDisabled = false,
+}) => {
   return (
     <div
-      className={text || shape === "pill" ? `fab-button pill` : `fab-button`}
+      className={`${isDisabled && "disabled"} ${
+        text || shape === "pill" ? `fab-button pill` : `fab-button`
+      }`}
       onClick={(e) => onClick(e)}
     >
       {text ? (

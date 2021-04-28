@@ -129,7 +129,12 @@ export const TasksPage = () => {
               return null;
             }
           })}
-        <Fab icon={faPlus} text="Task" onClick={() => setIsModalOpen(true)} />
+        <Fab
+          icon={faPlus}
+          text="Task"
+          onClick={() => setIsModalOpen(true)}
+          isDisabled={isModalOpen}
+        />
       </div>
     </div>
   );
