@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Monkey Business: Project Planner
+
+See the deployed app: https://aa-ronn.github.io/monkey-business/
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
