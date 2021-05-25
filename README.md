@@ -1,5 +1,7 @@
 # Monkey Business: Project Planner
 
+Created for the Advanced Web Framework class.
+
 See the deployed app: https://aa-ronn.github.io/monkey-business/
 
 ## Getting Started with Create React App
